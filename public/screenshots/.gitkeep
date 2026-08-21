@@ -1,0 +1,8 @@
+# Screenshot Directory
+
+Place your PWA screenshots here:
+
+- **desktop-1.png** - 1280x720px (landscape/wide)
+- **mobile-1.png** - 750x1334px (portrait/narrow)
+
+These screenshots will be shown when users install your PWA from the browser.

@@ -1,69 +1,397 @@
-import Image from "next/image";
+"use client";
+
+import { FormEvent, useState } from "react";
+import ComparisonMenu from "./components/ComparisonMenu";
+import { ArrowRight, BadgeCheck } from 'lucide-react';
+
+const features = ["Unified inbox", "AI agents", "Automations", "Campaigns", "CRM", "Commerce", "Analytics"];
+const featureDetails: Record<string, { title: string; description: string; bullets: string[] }> = {
+  "Unified inbox": { title: "One inbox. Zero missed opportunities.", description: "Bring conversations, context and ownership together so every customer reaches the right person.", bullets: ["Assign and route conversations", "Collaborate with notes and mentions", "Open complete customer history"] },
+  "AI agents": { title: "Always-on answers with a human touch.", description: "Use AI to resolve routine questions, suggest replies, qualify intent and alert your team when it matters.", bullets: ["AI-assisted responses", "Lead qualification and alerts", "Human handoff with full context"] },
+  "Automations": { title: "Build journeys without writing code.", description: "Create event-driven workflows for replies, templates, alerts, payments, catalogs and follow-ups.", bullets: ["Visual workflow builder", "Reusable triggers and actions", "Customer and team notifications"] },
+  "Campaigns": { title: "Personal outreach at WhatsApp speed.", description: "Segment audiences, launch personalised campaigns and understand delivery, engagement and usage.", bullets: ["Broadcasts and newsletters", "Audience segmentation", "Campaign and wallet analytics"] },
+  "CRM": { title: "Every relationship, deal and next step.", description: "Connect leads, contacts, companies, activities and opportunities to the conversations that created them.", bullets: ["Lead scoring and distribution", "Deals and sales forecasting", "Reminders and activity tracking"] },
+  "Commerce": { title: "From product discovery to repeat purchase.", description: "Connect stores, manage WhatsApp catalogs and automate order, merchant and cart-recovery journeys.", bullets: ["Shopify and WooCommerce", "Catalogs and collections", "Abandoned-cart recovery"] },
+  "Analytics": { title: "Know what is working and what needs attention.", description: "Track conversations, leads, campaigns, catalogs, orders, forms and team performance from actionable dashboards.", bullets: ["Sales and response performance", "Campaign and commerce insights", "Web-form submission analytics"] },
+};
+const industries = [
+  ["Technology", "Qualify every lead, instantly", "AI agents that answer questions, capture intent and hand hot opportunities to sales."],
+  ["Hospitality", "Bookings without the back-and-forth", "Turn WhatsApp into a concierge for reservations, updates and guest support."],
+  ["Retail", "Personal conversations at scale", "Recover carts, share recommendations and keep every order conversation in one place."],
+];
+const testimonials = [
+  { quote: 'WhatsEase gave us the flexibility and real-time support to manage more than ₹1.5 crore in ticket sales seamlessly.', name: 'Harshit Gupta', role: 'Event Organiser, Young Indians (CII)' },
+  { quote: 'The entire hotel booking journey happened on WhatsApp. A few messages, a couple of clicks, and it was done.', name: 'Palash Khandelwal', role: 'Founder, Aarambh School' },
+  { quote: 'A brilliant, convenient interface that businesses can adopt regardless of their industry.', name: 'Pranav Charan', role: 'Founder, Space & Formz Interior' },
+  { quote: 'WhatsEase was our ticketing and digital marketing partner for our food festival. Their execution helped us reach more people.', name: 'Dev Sain', role: 'Corporate General Manager, Waves Food Club' },
+  { quote: 'WhatsEase handled our complex ticketing needs perfectly and made the entire event smooth for parents, kids and organisers alike.', name: 'Garima Dave', role: 'Operations Manager, Alaiya Balaiya Garba' },
+  { quote: 'The support from the WhatsEase team has been phenomenal. The product is powerful, the team is hardworking, and the experience has been fantastic.', name: 'Shubham Londhe', role: 'Founder, TrainWithShubham' },
+];
+
+const platformGroups = [
+  { icon: "01", title: "Conversations", description: "Manage every customer conversation with context, ownership and speed.", items: ["WhatsApp team inbox", "Internal notes and mentions", "Quick replies and templates", "Conversation assignment", "Mobile chat access"] },
+  { icon: "02", title: "AI & automation", description: "Build intelligent journeys that respond, qualify and notify automatically.", items: ["AI agents and suggested replies", "No-code workflow builder", "Chatbots and auto responders", "AI alert variables", "Event and status triggers"] },
+  { icon: "03", title: "Sales CRM", description: "Keep leads, deals, people, companies and activity in one connected workspace.", items: ["Lead scoring and distribution", "Deals and sales forecasting", "Activity tracking", "Reminders and notifications", "Documents and attachments"] },
+  { icon: "04", title: "Campaigns", description: "Create targeted WhatsApp outreach with visibility into delivery and spend.", items: ["Personalised broadcasts", "Newsletters and offers", "Audience segmentation", "Campaign analytics", "Usage and wallet visibility"] },
+  { icon: "05", title: "Conversational commerce", description: "Bring products, orders and recovery journeys directly into WhatsApp.", items: ["Shopify integration", "WooCommerce integration", "Product catalogs and collections", "Abandoned-cart recovery", "Order and merchant notifications"] },
+  { icon: "06", title: "Control & integration", description: "Give each team the access they need and connect WhatsEase to your stack.", items: ["Organisation and team management", "Role-based permissions", "Field and hierarchy controls", "Web forms and submissions", "APIs, webhooks and native integrations"] },
+];
+
+const integrations = ["WhatsApp", "Shopify", "WooCommerce", "Facebook", "Instagram", "Google", "Web forms", "API & webhooks"];
+
+const outcomeStats = [
+  { value: '60%', label: 'lower support costs', text: 'Let AI handle routine questions while your team focuses on high-value conversations.' },
+  { value: '3.2x', label: 'faster responses', text: 'Smart routing and one shared inbox mean every customer reaches the right person quickly.' },
+  { value: '40%', label: 'more conversions', text: 'Personal follow-ups reach customers on the channel they already use every day.' },
+];
+
+const workflowSteps = [
+  { step: '01', title: 'Capture everywhere', text: 'Connect forms, ads, email, social and 30+ sources.' },
+  { step: '02', title: 'Qualify automatically', text: 'Score every lead based on intent and engagement.' },
+  { step: '03', title: 'Route intelligently', text: 'Assign by region, product, source or team availability.' },
+];
+
+const commerceSteps = [
+  { step: '01', title: 'Connect your store', text: 'Bring Shopify or WooCommerce into WhatsEase.' },
+  { step: '02', title: 'Sell from catalogs', text: 'Manage products and collections customers can browse.' },
+  { step: '03', title: 'Recover lost revenue', text: 'Automate abandoned-cart and order-status messages.' },
+  { step: '04', title: 'Track every order', text: 'Keep customer and merchant notifications in sync.' },
+];
+
+const mobilePoints = ['Installable web app', 'Mobile-first navigation', 'Direct conversation links', 'Real-time push alerts'];
+
+const securityCards = [
+  ['India-based hosting', 'Your data stays closer to home.'],
+  ['Organisation-level RBAC', 'Manage members, teams and feature permissions.'],
+  ['Granular CRM controls', 'Apply hierarchy, location and field-level restrictions.'],
+  ['API & webhooks', 'Connect safely to your tech stack.'],
+];
+
+const faqs = [
+  ["What can I manage inside WhatsEase?", "WhatsEase brings WhatsApp conversations, leads, deals, campaigns, automation, commerce, analytics and team administration into one workspace."],
+  ["Can I use my existing WhatsApp Business number?", "WhatsEase supports guided WhatsApp onboarding and coexistence workflows, so eligible businesses can connect an existing number while retaining the operating mode that fits them."],
+  ["Does WhatsEase support Shopify and WooCommerce?", "Yes. You can connect Shopify or WooCommerce, sync commerce data and automate customer or merchant notifications, including cart-recovery journeys."],
+  ["Can different teams have different access?", "Yes. Organisation owners can manage members, teams and role-based permissions, with additional hierarchy, location and field-level controls available for CRM workflows."],
+  ["Can my team work on mobile?", "Yes. The responsive experience includes mobile navigation, direct chat links and installable web-app capabilities with supported push notifications."],
+];
+
+function Mark() {
+  return <span className="brand-mark" aria-hidden="true"><i /><i /><i /></span>;
+}
+
+function Icon({ children }: { children: React.ReactNode }) {
+  return <span className="icon-box" aria-hidden="true">{children}</span>;
+}
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeFeature, setActiveFeature] = useState("Unified inbox");
+  const [formSent, setFormSent] = useState(false);
+  const currentFeature = featureDetails[activeFeature];
+
+  function submitForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormSent(true);
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main>
+      <div className="announcement">New: Capture, qualify and route leads with WhatsEase AI <a href="#demo">See what&apos;s new <span>→</span></a></div>
+      <header className="site-header">
+        <a className="logo" href="#top" aria-label="WhatsEase home"><Mark /><strong>Whats<span>Ease</span></strong></a>
+        <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button>
+        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <a href="/product">Product</a>
+          <a href="/use-case">Use Case</a>
+          <ComparisonMenu />
+          <a href="/pricing">Pricing</a>
+          <a href="/case-studies">Case Studies</a>
+          <a href="/about">About us</a>
+        </nav>
+        <div className="nav-actions"><a href="https://app.whatsease.in" className="login">Log in</a><a className="button button-small" href="#demo">Book a demo</a></div>
+      </header>
+
+      <section className="hero section" id="top">
+        <div className="hero-copy">
+          <div className="eyebrow"><span className="status-dot" /> AI-powered WhatsApp CRM</div>
+          <h1>Turn every WhatsApp conversation into <em>revenue.</em></h1>
+          <p>Capture leads, automate support and manage every customer conversation from one beautifully simple workspace.</p>
+          <div className="hero-actions"><a className="button" href="#demo">Book a free demo <span>→</span></a><a className="text-link" href="#product"><span className="play">▶</span> See how it works</a></div>
+          <div className="hero-proof"><div className="avatars"><span>HG</span><span>PK</span><span>PC</span><span>+</span></div><div><b>Trusted by growing teams</b><small>No credit card required</small></div></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="hero-visual" aria-label="WhatsEase unified inbox preview">
+          <div className="glow glow-one" /><div className="glow glow-two" />
+          <div className="app-window">
+            <aside className="app-sidebar"><div className="app-logo"><Mark /></div>{["▦","✉","◎","⊙","⚙"].map((x,i)=><span className={i===1?"selected":""} key={x}>{x}</span>)}</aside>
+            <div className="inbox-list"><div className="app-title"><b>Inbox</b><span>+</span></div><div className="search">Search conversations</div>{["Aarav Mehta","Nisha Kapoor","Rohan Shah","Meera Joshi"].map((name,i)=><div className={i===0?"contact active":"contact"} key={name}><span className={`avatar a${i}`}>{name[0]}</span><div><b>{name}</b><small>{i===0?"I’d like to know more...":"Thanks for your help!"}</small></div><time>{i+2}m</time></div>)}</div>
+            <div className="chat"><div className="chat-head"><span className="avatar a0">A</span><div><b>Aarav Mehta</b><small><i /> Online</small></div><button>⋯</button></div><div className="chat-body"><div className="date">Today</div><div className="bubble incoming">Hi! I&apos;d like to know more about your business plan.<time>10:24 AM</time></div><div className="bubble outgoing">Of course! I can help you find the perfect plan. How many team members will use WhatsEase?<time>10:24 AM ✓✓</time></div><div className="ai-note"><span>✦</span><div><b>AI suggested reply</b><p>Based on this lead&apos;s profile, recommend the Growth plan.</p></div></div></div><div className="composer">Write a message... <span>➜</span></div></div>
+          </div>
+          <div className="floating-card lead-card"><Icon>↗</Icon><div><small>New qualified lead</small><b>Aarav Mehta</b></div><strong>92</strong></div>
+          <div className="floating-card response-card"><span className="check">✓</span><div><b>3.2x faster</b><small>Average response time</small></div></div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div><span>young indians</span><span>TAKE PRIDE</span><span>Aarambh</span><span>WAVES</span><span>SPACE &amp; FORMZ</span></div></section>
+
+      <section className="section product" id="product">
+        <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
+        <div className="feature-tabs" role="tablist">{features.map(item=><button role="tab" aria-selected={activeFeature===item} className={activeFeature===item?"active":""} onClick={()=>setActiveFeature(item)} key={item}>{item}</button>)}</div>
+        <div className="feature-stage">
+          <div className="feature-copy"><div className="feature-number">{String(features.indexOf(activeFeature) + 1).padStart(2,"0")}</div><h3>{currentFeature.title}</h3><p>{currentFeature.description}</p><ul>{currentFeature.bullets.map(item=><li key={item}><span>✓</span>{item}</li>)}</ul><a href="#demo" className="arrow-link">Explore {activeFeature} <span>→</span></a></div>
+          <div className="mini-product"><div className="mini-top"><span /><span /><span /><b>Team inbox</b></div><div className="mini-columns"><div className="mini-nav"><Mark />{[1,2,3,4].map(x=><i key={x}/>)}</div><div className="mini-list"><b>All conversations <span>12</span></b>{[1,2,3,4].map((x,i)=><div className={i===0?"on":""} key={x}><i className={`avatar a${i}`} /> <span><strong>{["Priya Sharma","Kabir Singh","Diya Patel","Arjun Rao"][i]}</strong><small>Customer message preview...</small></span></div>)}</div><div className="mini-chat"><div className="mini-chat-head"><i className="avatar a0"/><b>Priya Sharma<small>Online</small></b></div><span className="line l1"/><span className="line l2"/><div className="mini-bubble">Can you share the pricing details?</div><div className="mini-bubble green">Absolutely! Here&apos;s the plan that fits your team.</div></div></div></div>
+        </div>
+      </section>
+
+      <section className="platform section" id="platform">
+        <div className="section-heading centered"><div className="kicker">THE COMPLETE WHATSAPP GROWTH PLATFORM</div><h2>One workspace, from first message to repeat customer</h2><p>Every major WhatsEase capability, organised around the work your teams do every day.</p></div>
+        <div className="platform-grid">{platformGroups.map(group=><article key={group.title}><div className="platform-card-head"><span>{group.icon}</span><h3>{group.title}</h3></div><p>{group.description}</p><ul>{group.items.map(item=><li key={item}><i aria-hidden="true">&#10003;</i>{item}</li>)}</ul></article>)}</div>
+      </section>
+
+      <section className="integration-band"><div><small>CONNECTED TO THE TOOLS YOU ALREADY USE</small><div>{integrations.map((item,index)=><span key={item}><i>{index + 1}</i>{item}</span>)}</div></div></section>
+
+      <section id="solutions" className="section-shell">
+        <div className="soft-card px-6 py-12 sm:px-10">
+          <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+            <div>
+              <div className="kicker">Built for momentum</div>
+              <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Less busywork. More business.</h2>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">WhatsEase is designed to help teams spend less time switching tools and more time moving conversations forward.</p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {outcomeStats.map((item) => (
+                <article key={item.label} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+                  <div className="text-4xl font-black tracking-[-0.06em] text-[#0a2e1c]">{item.value}</div>
+                  <div className="mt-2 text-sm font-bold uppercase tracking-[0.14em] text-[#1e5f3f]">{item.label}</div>
+                  <p className="mt-4 text-sm leading-7 text-slate-600">{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" className="section-shell">
+        <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
+          <div className="rounded-3xl border border-slate-100 bg-linear-to-b from-[#051a0f] to-[#0a2e1c] p-6 text-white shadow-lg shadow-[#0a2e1c]/10">
+            <div className="flex flex-wrap gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#b8d4c6]">
+              <span className="rounded-full border border-white/10 px-3 py-2">Meta</span>
+              <span className="rounded-full border border-white/10 px-3 py-2">Google</span>
+              <span className="rounded-full border border-white/10 px-3 py-2">Web forms</span>
+              <span className="rounded-full border border-white/10 px-3 py-2">Email</span>
+            </div>
+            <div className="relative mt-16 flex min-h-85 items-center justify-center rounded-3xl border border-white/10 bg-white/5">
+              <div className="absolute left-6 top-6 rounded-2xl bg-white px-4 py-3 text-sm text-[#0a2e1c] shadow-sm">
+                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">New lead</div>
+                <div className="mt-1 font-bold">Kavya Desai</div>
+                <div className="mt-1 text-xs text-slate-500">Source: Instagram</div>
+              </div>
+              <div className="rounded-full border border-white/10 bg-[#e8f5ee] px-8 py-8 text-center text-[#0a2e1c] shadow-xl">
+                <Mark />
+                <div className="mt-3 text-sm font-bold uppercase tracking-[0.2em] text-[#1e5f3f]">WhatsEase</div>
+              </div>
+              <div className="absolute bottom-6 right-6 rounded-2xl bg-[#e8f5ee] px-4 py-3 text-[#0a2e1c] shadow-sm">
+                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Assigned to</div>
+                <div className="mt-1 font-bold">Neha • West region</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="kicker">Lead automation</div>
+            <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">The right lead. The right rep. Right now.</h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Capture leads from every channel, qualify them with AI and route them to the best person before interest turns cold.</p>
+            <div className="mt-8 space-y-4">
+              {workflowSteps.map((item) => (
+                <div key={item.step} className="grid grid-cols-[52px_1fr] gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#e8f5ee] font-black text-[#1e5f3f]">{item.step}</div>
+                  <div>
+                    <div className="text-base font-bold text-[#0a2e1c]">{item.title}</div>
+                    <p className="mt-1 text-sm leading-7 text-slate-600">{item.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#0a2e1c] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0a2e1c]">See lead automation <ArrowRight className="h-4 w-4" /></a>
+          </div>
+        </div>
+      </section>
+
+      <section id="commerce" className="section-shell">
+        <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
+          <div>
+            <div className="kicker">Conversational commerce</div>
+            <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Turn WhatsApp into your highest-converting storefront.</h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Connect your store, sync products and keep customers moving from discovery to delivery with timely WhatsApp journeys.</p>
+            <div className="mt-8 space-y-4">
+              {commerceSteps.map((item) => (
+                <div key={item.step} className="grid grid-cols-[52px_1fr] gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#e8f5ee] font-black text-[#1e5f3f]">{item.step}</div>
+                  <div>
+                    <div className="text-base font-bold text-[#0a2e1c]">{item.title}</div>
+                    <p className="mt-1 text-sm leading-7 text-slate-600">{item.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#0a2e1c] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0a2e1c]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
+          </div>
+          <div className="relative min-h-115 overflow-hidden rounded-3xl border border-slate-100 bg-linear-to-b from-[#051a0f] to-[#0a2e1c] p-6 text-white shadow-lg shadow-[#0a2e1c]/10">
+            <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c] shadow-sm">
+              <div>
+                <div className="text-sm font-bold">Your online store</div>
+                <div className="text-xs text-slate-500">Connected</div>
+              </div>
+              <span className="rounded-full bg-[#e8f5ee] px-3 py-1 text-xs font-bold text-[#1e5f3f]">Live</span>
+            </div>
+            <div className="absolute left-6 top-28 w-44 rounded-2xl bg-white p-4 text-[#0a2e1c] shadow-sm">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">New order</div>
+              <div className="mt-1 font-bold">#WE-24819</div>
+              <div className="mt-1 text-xs text-slate-500">2 products · ₹4,299</div>
+            </div>
+            <div className="absolute right-6 top-44 w-56 rounded-2xl bg-white p-4 text-[#0a2e1c] shadow-sm">
+              <div className="text-sm font-semibold">WhatsApp</div>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Hi Riya! Your order #WE-24819 is confirmed. We&apos;ll notify you as soon as it ships.</p>
+              <div className="mt-3 text-xs text-slate-500">10:42 AM ✓✓</div>
+            </div>
+            <div className="absolute bottom-6 left-6 rounded-2xl bg-[#e8f5ee] px-4 py-3 text-[#0a2e1c] shadow-sm">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Cart recovered</div>
+              <div className="mt-1 font-bold text-[#1e5f3f]">₹2,499 revenue</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="mobile" className="section-shell">
+        <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
+          <div>
+            <div className="kicker">Ready wherever work happens</div>
+            <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Keep customers moving, even when your team is mobile.</h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Install WhatsEase as a web app, jump directly into priority chats and receive supported push notifications so important conversations do not wait for a desktop.</p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {mobilePoints.map((point) => (
+                <div key={point} className="rounded-2xl border border-slate-100 bg-white px-4 py-4 text-sm font-semibold text-slate-700 shadow-sm">
+                  <span className="mr-2 inline-grid h-5 w-5 place-items-center rounded-full bg-[#e8f5ee] text-xs font-black text-[#1e5f3f]">✓</span>
+                  {point}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative mx-auto w-full max-w-sm rounded-4xl border border-slate-100 bg-[#051a0f] p-4 text-white shadow-lg shadow-[#0a2e1c]/10">
+            <div className="mx-auto mb-4 h-2 w-24 rounded-full bg-white/20" />
+            <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c]">
+              <div className="flex items-center gap-3">
+                <Mark />
+                <b>Inbox</b>
+              </div>
+              <span className="rounded-full bg-[#e8f5ee] px-3 py-1 text-xs font-bold text-[#1e5f3f]">3</span>
+            </div>
+            <div className="mt-4 space-y-3">
+              {['New high-intent lead', 'Order needs attention', 'Customer replied'].map((item, index) => (
+                <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/6 px-4 py-3">
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 font-black text-[#2d8a5e]">{index === 0 ? 'AI' : index === 1 ? '#' : '@'}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-bold">{item}</div>
+                    <div className="truncate text-xs text-[#b8d4c6]">{index === 0 ? 'Lead score 91 - assigned to Sales' : 'Tap to open the conversation'}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c]">
+              {['⌂', '✉', '+', '◉', '⚙'].map((item, index) => (
+                <span key={item} className={index === 1 ? 'font-black text-[#1e5f3f]' : ''}>{item}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="industries" className="section-shell">
+        <div className="soft-card px-6 py-12 sm:px-10">
+          <div className="section-heading">
+            <div className="kicker">Solutions that fit</div>
+            <h2>Made for your industry. Ready for your customers.</h2>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {industries.map((x, i) => (
+              <article key={x[0]} className="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+                <div className={`mb-5 rounded-[1.25rem] p-5 ${i === 0 ? 'bg-[#e8f5ee]' : i === 1 ? 'bg-[#e8f5ee]' : 'bg-[#e8f5ee]'}`}>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0a2e1c] text-sm font-black text-white">{i === 0 ? 'AI' : i === 1 ? 'EV' : 'BI'}</div>
+                </div>
+                <div className="text-xs font-bold uppercase tracking-[0.14em] text-[#1e5f3f]">{x[0]}</div>
+                <h3 className="mt-3 text-xl font-bold tracking-tight text-[#0a2e1c]">{x[1]}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{x[2]}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="customers" className="section-shell">
+        <div className="soft-card px-6 py-12 sm:px-10">
+          <div className="section-heading centered">
+            <div className="kicker mx-auto">Customer stories</div>
+            <h2>Loved by teams who move fast</h2>
+            <p>Real businesses. Real conversations. Results that speak for themselves.</p>
+          </div>
+          <div className="mt-10 grid gap-4 lg:grid-cols-3">
+            {testimonials.map((item, i) => (
+              <blockquote key={item.name} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+                <div className="text-sm font-black tracking-[0.18em] text-[#1e5f3f] uppercase">★ ★ ★ ★ ★</div>
+                <p className="mt-5 text-base leading-8 text-slate-600">“{item.quote}”</p>
+                <footer className="mt-6 flex items-center gap-3">
+                  <span className={`person p${i}`}>{item.name.split(' ').map((n) => n[0]).join('')}</span>
+                  <div>
+                    <b className="block text-sm text-[#0a2e1c]">{item.name}</b>
+                    <small className="block text-xs text-slate-500">{item.role}</small>
+                  </div>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="security" className="section-shell">
+        <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
+          <div>
+            <div className="kicker">Secure by design</div>
+            <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Your conversations. Protected at every step.</h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Enterprise-grade controls and India-based infrastructure help keep your customer data safe and your team in control.</p>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-700 transition hover:border-[#2d8a5e] hover:text-[#1e5f3f]">Explore security <ArrowRight className="h-4 w-4" /></a>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {securityCards.map(([title, text]) => (
+              <article key={title} className="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+                <div className="icon-box mb-4"><BadgeCheck className="h-5 w-5" /></div>
+                <h3 className="text-lg font-bold text-[#0a2e1c]">{title}</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-600">{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="section-shell">
+        <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[.85fr_1.15fr] lg:px-10">
+          <div>
+            <div className="kicker">Frequently asked questions</div>
+            <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Everything you need to know.</h2>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Still deciding whether WhatsEase fits your workflow? Our team can walk you through the details.</p>
+            <a href="mailto:connect.whatsease@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#0a2e1c] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0a2e1c]">Ask another question <ArrowRight className="h-4 w-4" /></a>
+          </div>
+          <div className="space-y-4">
+            {faqs.map(([question, answer], index) => (
+              <details key={question} open={index === 0} className="group rounded-[1.25rem] border border-slate-100 bg-white p-5 shadow-sm">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-bold text-[#0a2e1c]">{question}<span className="text-xl font-black text-[#1e5f3f]">+</span></summary>
+                <p className="mt-4 text-sm leading-7 text-slate-600">{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="demo section" id="demo"><div className="demo-copy"><div className="kicker">LET&apos;S TALK</div><h2>See what WhatsEase can do for your team</h2><p>Book a personalised walkthrough. We&apos;ll learn about your workflow, show the features that matter and answer every question.</p><ul><li><span>✓</span> A tailored 30-minute product tour</li><li><span>✓</span> Practical recommendations for your team</li><li><span>✓</span> No pressure. No generic sales deck.</li></ul><div className="callout"><small>Prefer to talk now?</small><a href="tel:+919510468956">+91 95104 68956</a></div></div><form onSubmit={submitForm}>{formSent ? <div className="success"><span>✓</span><h3>Thanks—we&apos;ll be in touch.</h3><p>A WhatsEase specialist will contact you shortly.</p><button type="button" className="text-link" onClick={()=>setFormSent(false)}>Send another request</button></div> : <><div className="form-row"><label>Full name<input required name="name" placeholder="Your name" /></label><label>Work email<input required type="email" name="email" placeholder="you@company.com" /></label></div><div className="form-row"><label>Phone number<input required type="tel" name="phone" placeholder="+91 98765 43210" /></label><label>Company<input required name="company" placeholder="Company name" /></label></div><label>Team size<select name="size" defaultValue=""><option value="" disabled>Select team size</option><option>1–10</option><option>11–50</option><option>51–200</option><option>201+</option></select></label><label>What would you like to improve?<textarea name="message" placeholder="Tell us a little about your sales or support workflow" /></label><button className="button form-button">Book my free demo <span>→</span></button><small className="privacy">By submitting, you agree to our privacy policy. We&apos;ll never share your information.</small></>}</form></section>
+
+      <footer className="footer"><div className="footer-main"><div className="footer-brand"><a className="logo inverse" href="#top"><Mark /><strong>Whats<span>Ease</span></strong></a><p>AI-powered conversations that help ambitious teams sell, support and grow on WhatsApp.</p><div className="footer-contact"><a href="tel:+919510468956">+91 95104 68956</a><a href="mailto:connect.whatsease@gmail.com">connect.whatsease@gmail.com</a><span>Vadodara, Gujarat, India</span></div></div><div><h3>Product</h3><a href="#product">Overview</a><a href="#platform">Features</a><a href="https://www.whatsease.in/pricing">Pricing</a><a href="#commerce">Commerce</a></div><div><h3>Solutions</h3><a href="#solutions">Sales</a><a href="#solutions">Support</a><a href="#solutions">Marketing</a><a href="#industries">Industries</a></div><div><h3>Company</h3><a href="#customers">Customers</a><a href="https://www.whatsease.in/about-us">About</a><a href="https://www.whatsease.in/contact">Contact</a><a href="https://www.whatsease.in/case-studies">Case studies</a></div><div><h3>Resources</h3><a href="https://www.whatsease.in/docs">Documentation</a><a href="https://www.whatsease.in/contact">Help centre</a><a href="https://www.whatsease.in/privacy">Privacy</a><a href="https://www.whatsease.in/terms">Terms</a></div></div><div className="footer-bottom"><span>© 2026 WhatsEase Technologies</span><span>Made with care in India <b>♥</b></span></div></footer>
+    </main>
   );
 }

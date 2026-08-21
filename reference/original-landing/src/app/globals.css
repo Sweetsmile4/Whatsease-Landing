@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --sidebar-width: 16rem;
+  --sidebar-bg: #f3f4f6;
+  --sidebar-surface: #ffffff;
+  --sidebar-border: rgba(0, 0, 0, 0.06);
+  --sidebar-text-muted: #6b7280;
+  --sidebar-active-accent: #04b851;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+@font-face {
+  font-family: 'Figtree-Medium';
+  font-style: normal;
+  font-weight: 300 900;
+  src: url('/fonts/figtree/Figtree-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Figtree-SemiBold';
+  font-style: normal;
+  font-weight: 300 900;
+  src: url('/fonts/figtree/Figtree-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Figtree-Regular';
+  font-style: normal;
+  font-weight: 300 900;
+  src: url('/fonts/figtree/Figtree-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Pangea';
+  font-style: normal;
+  font-weight: 500 600;
+  src: url('/fonts/PangeaAfrikanTrial-Medium.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Pangea-Light';
+  font-style: normal;
+  font-weight: 500 600;
+  src: url('/fonts/PangeaAfrikanTrial-Light.otf') format('opentype');
+}
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Figtree', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Force light mode, ignore prefers-color-scheme and dark mode classes */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff !important;
+    --foreground: #171717 !important;
+  }
+  body {
+    background-color: #ffffff !important;
+    color: #171717 !important;
+  }
+}
+
+body.about-page {
+  background-color: #0c0c1a;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 7xl;
+  overflow-x: hidden;
+}
+
+/* Make sure section containers have full width */
+.about-page section > div.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-from-left {
+  animation: slideFromLeft 0.2s ease-out forwards;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  min-width: 200%;
+}
+body.modal-open .fixed.z-\[99999\] {
+  position: fixed;
+  z-index: 99999 !important;
+}
+
+@layer utilities {
+  .ease-spring {
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.5);
+  }
+}
+
+@keyframes flowingGradient {
+  0% {
+    opacity: 0.7;
+    background-position: 0% 0%;
+  }
+  50% {
+    opacity: 1;
+    background-position: 0% 30%;
+  }
+  100% {
+    opacity: 0.7;
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+
+/* Add these animation classes */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.rf-dock-controls {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 32px !important;
+  top: unset !important;
+  right: unset !important;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(19, 217, 96, 0.08) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(4, 184, 81, 0.2);
+  border-radius: 16px;
+  box-shadow:
+    0 8px 32px rgba(4, 184, 81, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(4, 184, 81, 0.06);
+  padding: 12px 28px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 16px !important;
+  z-index: 20;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rf-dock-controls:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow:
+    0 12px 40px rgba(4, 184, 81, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.1),
+    0 3px 12px rgba(4, 184, 81, 0.08);
+  border-color: rgba(4, 184, 81, 0.3);
+}
+
+/* Hide scrollbar for all browsers */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Force the inner controls to be horizontal */
+.rf-dock-controls .react-flow__controls {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.rf-dock-controls .react-flow__controls button,
+.rf-dock-controls .react-flow__controls-button {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  color: #020210 !important;
+  padding: 8px !important;
+  transition: all 0.2s ease !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+.rf-dock-controls .react-flow__controls button:hover,
+.rf-dock-controls .react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  color: #04b851 !important;
+}
+
+.rf-dock-controls .react-flow__controls button:active,
+.rf-dock-controls .react-flow__controls-button:active {
+  transform: scale(0.95) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.rf-dock-controls .react-flow__controls button svg,
+.rf-dock-controls .react-flow__controls-button svg {
+  width: 20px !important;
+  height: 20px !important;
+  transform: scale(1.2) !important;
+}
+
+/* Dock repositioning when chat is expanded */
+.chat-expanded .rf-dock-controls {
+  left: 25% !important;
+  transform: translateX(-50%) !important;
+}
+
+.chat-expanded .rf-dock-controls:hover {
+  transform: translateX(-50%) translateY(-2px) !important;
+}
+
+/* Responsive adjustments for expanded chat */
+@media (max-width: 768px) {
+  .chat-expanded .rf-dock-controls {
+    left: 50% !important;
+    bottom: 20px !important;
+  }
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay classes */
+.delay-200 {
+  transition-delay: 200ms;
+}
+
+.delay-400 {
+  transition-delay: 400ms;
+}
+
+.delay-600 {
+  transition-delay: 600ms;
+}
+
+.delay-800 {
+  transition-delay: 800ms;
+}
+
+@keyframes flowAnimation {
+  from {
+    stroke-dasharray: 5;
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dasharray: 5;
+    stroke-dashoffset: -25;
+  }
+}
+
+.react-flow__edge-path {
+  transition:
+    stroke 0.2s,
+    stroke-width 0.2s,
+    opacity 0.2s;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 3;
+  stroke: #afb6c5;
+}
+
+.react-flow__handle {
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.react-flow__handle:hover {
+  transform: scale(1.8);
+}
+
+/* Hide default ReactFlow node background */
+.react-flow__node {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Hide scrollbar for mobile tabs */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Search Modal Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 20px;
+  border: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+.scrollbar-thumb-gray-300 {
+  scrollbar-color: #d1d5db transparent;
+}
+
+.scrollbar-track-transparent {
+  scrollbar-color: #d1d5db transparent;
+}
+
+.scrollbar-saas {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
+
+.scrollbar-saas::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scrollbar-saas::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-saas::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+}
+
+.scrollbar-saas:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.55);
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.gmail-rich-editor .tiptap {
+  outline: none;
+}
+
+.gmail-rich-editor .tiptap p.is-editor-empty:first-child::before {
+  color: #9ca3af;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.dashboard-sidebar a,
+.dashboard-sidebar button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dashboard-sidebar a:focus,
+.dashboard-sidebar a:focus-visible,
+.dashboard-sidebar button:focus,
+.dashboard-sidebar button:focus-visible {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Email preview: avoid Tailwind prose resets so inline HTML/CSS renders faithfully */
+.gmail-email-preview-content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1f2937;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.gmail-email-preview-content p {
+  margin: 0 0 0.75em;
+}
+
+.gmail-email-preview-content p:last-child {
+  margin-bottom: 0;
+}
+
+.gmail-email-preview-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.gmail-email-preview-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.gmail-email-preview-content table {
+  border-collapse: collapse;
+  max-width: 100%;
+}
+
+.gmail-email-preview-content ul,
+.gmail-email-preview-content ol {
+  margin: 0 0 0.75em;
+  padding-left: 1.25em;
+}
