@@ -1,6 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
+import updatedInbox from "../public/inbox.png";
+import automationWorkspace from "../public/automation.png";
+import campaignsWorkspace from "../public/Campaigns.png";
+import crmWorkspace from "../public/crm.png";
+import commerceWorkspace from "../public/commerce.png";
+import analyticsWorkspace from "../public/Analytics.png";
 import ComparisonMenu from "./components/ComparisonMenu";
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 
@@ -11,7 +18,7 @@ const featureDetails: Record<string, { title: string; description: string; bulle
   "Automations": { title: "Build journeys without writing code.", description: "Create event-driven workflows for replies, templates, alerts, payments, catalogs and follow-ups.", bullets: ["Visual workflow builder", "Reusable triggers and actions", "Customer and team notifications"] },
   "Campaigns": { title: "Personal outreach at WhatsApp speed.", description: "Segment audiences, launch personalised campaigns and understand delivery, engagement and usage.", bullets: ["Broadcasts and newsletters", "Audience segmentation", "Campaign and wallet analytics"] },
   "CRM": { title: "Every relationship, deal and next step.", description: "Connect leads, contacts, companies, activities and opportunities to the conversations that created them.", bullets: ["Lead scoring and distribution", "Deals and sales forecasting", "Reminders and activity tracking"] },
-  "Commerce": { title: "From product discovery to repeat purchase.", description: "Connect stores, manage WhatsApp catalogs and automate order, merchant and cart-recovery journeys.", bullets: ["Shopify and WooCommerce", "Catalogs and collections", "Abandoned-cart recovery"] },
+  "Commerce": { title: "From product discovery to repeat purchase.", description: "Connect Shopify, manage WhatsApp catalogs and automate order, merchant and cart-recovery journeys.", bullets: ["Shopify integration", "Catalogs and collections", "Abandoned-cart recovery"] },
   "Analytics": { title: "Know what is working and what needs attention.", description: "Track conversations, leads, campaigns, catalogs, orders, forms and team performance from actionable dashboards.", bullets: ["Sales and response performance", "Campaign and commerce insights", "Web-form submission analytics"] },
 };
 const industries = [
@@ -33,11 +40,11 @@ const platformGroups = [
   { icon: "02", title: "AI & automation", description: "Build intelligent journeys that respond, qualify and notify automatically.", items: ["AI agents and suggested replies", "No-code workflow builder", "Chatbots and auto responders", "AI alert variables", "Event and status triggers"] },
   { icon: "03", title: "Sales CRM", description: "Keep leads, deals, people, companies and activity in one connected workspace.", items: ["Lead scoring and distribution", "Deals and sales forecasting", "Activity tracking", "Reminders and notifications", "Documents and attachments"] },
   { icon: "04", title: "Campaigns", description: "Create targeted WhatsApp outreach with visibility into delivery and spend.", items: ["Personalised broadcasts", "Newsletters and offers", "Audience segmentation", "Campaign analytics", "Usage and wallet visibility"] },
-  { icon: "05", title: "Conversational commerce", description: "Bring products, orders and recovery journeys directly into WhatsApp.", items: ["Shopify integration", "WooCommerce integration", "Product catalogs and collections", "Abandoned-cart recovery", "Order and merchant notifications"] },
-  { icon: "06", title: "Control & integration", description: "Give each team the access they need and connect WhatsEase to your stack.", items: ["Organisation and team management", "Role-based permissions", "Field and hierarchy controls", "Web forms and submissions", "APIs, webhooks and native integrations"] },
+  { icon: "05", title: "Conversational commerce", description: "Bring products, orders and recovery journeys directly into WhatsApp.", items: ["Shopify integration", "Product catalogs and collections", "Abandoned-cart recovery", "Order and merchant notifications", "Commerce analytics"] },
+  { icon: "06", title: "Control & integration", description: "Give each team the access they need and connect WhatsEase to your stack.", items: ["Google Sheets and web forms", "IndiaMART, TradeIndia & ExportersIndia", "WhatsApp APIs", "Facebook and Instagram", "Role-based permissions"] },
 ];
 
-const integrations = ["WhatsApp", "Shopify", "WooCommerce", "Facebook", "Instagram", "Google", "Web forms", "API & webhooks"];
+const integrations = ["WhatsApp APIs", "Google Sheets", "Shopify", "IndiaMART", "TradeIndia", "ExportersIndia", "Web forms", "Facebook", "Instagram"];
 
 const outcomeStats = [
   { value: '60%', label: 'lower support costs', text: 'Let AI handle routine questions while your team focuses on high-value conversations.' },
@@ -52,7 +59,7 @@ const workflowSteps = [
 ];
 
 const commerceSteps = [
-  { step: '01', title: 'Connect your store', text: 'Bring Shopify or WooCommerce into WhatsEase.' },
+  { step: '01', title: 'Connect your store', text: 'Bring Shopify into WhatsEase.' },
   { step: '02', title: 'Sell from catalogs', text: 'Manage products and collections customers can browse.' },
   { step: '03', title: 'Recover lost revenue', text: 'Automate abandoned-cart and order-status messages.' },
   { step: '04', title: 'Track every order', text: 'Keep customer and merchant notifications in sync.' },
@@ -70,7 +77,7 @@ const securityCards = [
 const faqs = [
   ["What can I manage inside WhatsEase?", "WhatsEase brings WhatsApp conversations, leads, deals, campaigns, automation, commerce, analytics and team administration into one workspace."],
   ["Can I use my existing WhatsApp Business number?", "WhatsEase supports guided WhatsApp onboarding and coexistence workflows, so eligible businesses can connect an existing number while retaining the operating mode that fits them."],
-  ["Does WhatsEase support Shopify and WooCommerce?", "Yes. You can connect Shopify or WooCommerce, sync commerce data and automate customer or merchant notifications, including cart-recovery journeys."],
+  ["Which platforms does WhatsEase integrate with?", "WhatsEase connects with Google Sheets, Shopify, IndiaMART, TradeIndia, ExportersIndia, web forms, WhatsApp APIs, Facebook and Instagram."],
   ["Can different teams have different access?", "Yes. Organisation owners can manage members, teams and role-based permissions, with additional hierarchy, location and field-level controls available for CRM workflows."],
   ["Can my team work on mobile?", "Yes. The responsive experience includes mobile navigation, direct chat links and installable web-app capabilities with supported push notifications."],
 ];
@@ -81,6 +88,60 @@ function Mark() {
 
 function Icon({ children }: { children: React.ReactNode }) {
   return <span className="icon-box" aria-hidden="true">{children}</span>;
+}
+
+const moduleContent: Record<string, { label: string; metric: string; rows: string[] }> = {
+  "Unified inbox": { label: "All conversations", metric: "12 open", rows: ["Priya Sharma", "Kabir Singh", "Diya Patel"] },
+  "AI agents": { label: "AI agent workspace", metric: "84% resolved", rows: ["Product enquiry agent", "Lead qualification", "Support handoff"] },
+  "Automations": { label: "Customer journey", metric: "Active", rows: ["New enquiry received", "Qualify lead with AI", "Assign to sales team"] },
+  "Campaigns": { label: "Campaign performance", metric: "92.4% delivered", rows: ["Festive offer", "Product launch", "Customer re-engagement"] },
+  "CRM": { label: "Sales pipeline", metric: "₹18.4L value", rows: ["New leads", "Qualified", "Proposal sent"] },
+  "Commerce": { label: "Shopify orders", metric: "₹2.8L recovered", rows: ["Catalog shared", "Order confirmed", "Cart recovery"] },
+  "Analytics": { label: "Performance overview", metric: "+28.6%", rows: ["Conversations", "Qualified leads", "Conversion rate"] },
+};
+
+function FeatureModule({ feature }: { feature: string }) {
+  const moduleData = moduleContent[feature];
+  const isFlow = feature === "Automations";
+  const isAnalytics = feature === "Analytics" || feature === "Campaigns";
+  const isPipeline = feature === "CRM";
+
+  if (["Unified inbox", "Automations", "Campaigns", "CRM", "Commerce", "Analytics"].includes(feature)) {
+    const isInbox = feature === "Unified inbox";
+    const isAutomation = feature === "Automations";
+    const isCampaigns = feature === "Campaigns";
+    const isCrm = feature === "CRM";
+    const isCommerce = feature === "Commerce";
+    const workspaceImage = isInbox ? updatedInbox : isAutomation ? automationWorkspace : isCampaigns ? campaignsWorkspace : isCrm ? crmWorkspace : isCommerce ? commerceWorkspace : analyticsWorkspace;
+    const workspaceName = isInbox ? "Inbox" : isAutomation ? "Automations" : isCampaigns ? "Campaigns" : isCrm ? "CRM" : isCommerce ? "Commerce" : "Analytics";
+    return (
+      <div className="module-screen actual-inbox-module">
+        <div className="module-topbar"><div><span /><span /><span /></div><strong>WhatsEase {workspaceName}</strong><small>Live workspace</small></div>
+        <Image src={workspaceImage} alt={`Actual WhatsEase ${workspaceName.toLowerCase()} interface`} priority />
+      </div>
+    );
+  }
+
+  return (
+    <div className={`module-screen module-${feature.toLowerCase().replaceAll(" ", "-")}`}>
+      <div className="module-topbar"><div><span /><span /><span /></div><strong>WhatsEase</strong><small>Live workspace</small></div>
+      <div className="module-shell">
+        <aside className="module-sidebar"><Image src="/whatsease_favicon.svg" alt="" width={28} height={28} />{[0,1,2,3,4].map((item)=><i className={item === 1 ? "on" : ""} key={item} />)}</aside>
+        <div className="module-main">
+          <header><div><small>{feature}</small><h4>{moduleData.label}</h4></div><b>{moduleData.metric}</b></header>
+          {isFlow ? (
+            <div className="automation-flow">{moduleData.rows.map((row,index)=><div key={row}><span>{index + 1}</span><b>{row}</b>{index < moduleData.rows.length - 1 && <i />}</div>)}</div>
+          ) : isAnalytics ? (
+            <div className="analytics-view"><div className="chart-bars">{[38,62,48,78,67,91,82].map((height,index)=><i style={{height:`${height}%`}} key={index}/>)}</div><div className="module-rows">{moduleData.rows.map((row,index)=><div key={row}><span>{row}</span><b>{["24,860","8,412","34.8%"][index]}</b></div>)}</div></div>
+          ) : isPipeline ? (
+            <div className="pipeline-view">{moduleData.rows.map((row,index)=><div key={row}><small>{row}</small><article><b>{["Aarav Mehta","Pioneer Retail","Studio Arc"][index]}</b><span>{["₹1.2L","₹3.8L","₹2.4L"][index]}</span></article><article><b>{["Nisha Kapoor","Apex Events","Nova Labs"][index]}</b><span>{["₹80K","₹2.1L","₹4.6L"][index]}</span></article></div>)}</div>
+          ) : (
+            <div className="conversation-view"><div className="module-rows">{moduleData.rows.map((row,index)=><div className={index === 0 ? "active" : ""} key={row}><i>{row[0]}</i><span><b>{row}</b><small>{feature === "Commerce" ? "Order journey updated" : "Customer message preview"}</small></span></div>)}</div><div className="module-detail"><span className="detail-line wide"/><span className="detail-line"/><div className="detail-bubble">{feature === "AI agents" ? "AI has qualified this conversation and prepared the next best response." : feature === "Commerce" ? "Your order is confirmed. We’ll send delivery updates on WhatsApp." : "Can you share more details about the right plan for my team?"}</div><div className="detail-bubble outgoing">{feature === "AI agents" ? "Suggested action: Assign to enterprise sales" : "Absolutely — I’ve shared the most relevant information below."}</div></div></div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -98,7 +159,7 @@ export default function Home() {
     <main>
       <div className="announcement">New: Capture, qualify and route leads with WhatsEase AI <a href="#demo">See what&apos;s new <span>→</span></a></div>
       <header className="site-header">
-        <a className="logo" href="#top" aria-label="WhatsEase home"><Mark /><strong>Whats<span>Ease</span></strong></a>
+        <a className="logo official-logo" href="#top" aria-label="WhatsEase home"><Image src="/logo.svg" alt="WhatsEase" width={154} height={32} priority /></a>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <a href="/product">Product</a>
@@ -108,7 +169,7 @@ export default function Home() {
           <a href="/case-studies">Case Studies</a>
           <a href="/about">About us</a>
         </nav>
-        <div className="nav-actions"><a href="https://app.whatsease.in" className="login">Log in</a><a className="button button-small" href="#demo">Book a demo</a></div>
+        <div className="nav-actions"><a href="https://whatsease.in" className="login">Log in</a><a className="button button-small" href="#demo">Book a demo</a></div>
       </header>
 
       <section className="hero section" id="top">
@@ -119,26 +180,22 @@ export default function Home() {
           <div className="hero-actions"><a className="button" href="#demo">Book a free demo <span>→</span></a><a className="text-link" href="#product"><span className="play">▶</span> See how it works</a></div>
           <div className="hero-proof"><div className="avatars"><span>HG</span><span>PK</span><span>PC</span><span>+</span></div><div><b>Trusted by growing teams</b><small>No credit card required</small></div></div>
         </div>
-        <div className="hero-visual" aria-label="WhatsEase unified inbox preview">
+        <div className="hero-visual authentic-hero" aria-label="WhatsEase unified inbox preview">
           <div className="glow glow-one" /><div className="glow glow-two" />
-          <div className="app-window">
-            <aside className="app-sidebar"><div className="app-logo"><Mark /></div>{["▦","✉","◎","⊙","⚙"].map((x,i)=><span className={i===1?"selected":""} key={x}>{x}</span>)}</aside>
-            <div className="inbox-list"><div className="app-title"><b>Inbox</b><span>+</span></div><div className="search">Search conversations</div>{["Aarav Mehta","Nisha Kapoor","Rohan Shah","Meera Joshi"].map((name,i)=><div className={i===0?"contact active":"contact"} key={name}><span className={`avatar a${i}`}>{name[0]}</span><div><b>{name}</b><small>{i===0?"I’d like to know more...":"Thanks for your help!"}</small></div><time>{i+2}m</time></div>)}</div>
-            <div className="chat"><div className="chat-head"><span className="avatar a0">A</span><div><b>Aarav Mehta</b><small><i /> Online</small></div><button>⋯</button></div><div className="chat-body"><div className="date">Today</div><div className="bubble incoming">Hi! I&apos;d like to know more about your business plan.<time>10:24 AM</time></div><div className="bubble outgoing">Of course! I can help you find the perfect plan. How many team members will use WhatsEase?<time>10:24 AM ✓✓</time></div><div className="ai-note"><span>✦</span><div><b>AI suggested reply</b><p>Based on this lead&apos;s profile, recommend the Growth plan.</p></div></div></div><div className="composer">Write a message... <span>➜</span></div></div>
-          </div>
+          <div className="hero-product-shot"><div className="browser-chrome"><span/><span/><span/><b>whatsease.in</b></div><Image src={updatedInbox} alt="Actual WhatsEase unified inbox showing conversations and contact information" priority /></div>
           <div className="floating-card lead-card"><Icon>↗</Icon><div><small>New qualified lead</small><b>Aarav Mehta</b></div><strong>92</strong></div>
           <div className="floating-card response-card"><span className="check">✓</span><div><b>3.2x faster</b><small>Average response time</small></div></div>
         </div>
       </section>
 
-      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div><span>young indians</span><span>TAKE PRIDE</span><span>Aarambh</span><span>WAVES</span><span>SPACE &amp; FORMZ</span></div></section>
+      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div className="customer-logos"><Image src="/Companies/cii.jpg" alt="Young Indians CII" width={112} height={52}/><Image src="/Companies/tws.png" alt="Train With Shubham" width={118} height={52}/><Image src="/Companies/wavesclub.png" alt="Waves Club" width={78} height={52}/><Image src="/Companies/vff.png" alt="VFF" width={92} height={52}/><Image src="/Companies/urbanforest.jpg" alt="Urban Forest" width={90} height={52}/></div></section>
 
       <section className="section product" id="product">
         <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
         <div className="feature-tabs" role="tablist">{features.map(item=><button role="tab" aria-selected={activeFeature===item} className={activeFeature===item?"active":""} onClick={()=>setActiveFeature(item)} key={item}>{item}</button>)}</div>
         <div className="feature-stage">
           <div className="feature-copy"><div className="feature-number">{String(features.indexOf(activeFeature) + 1).padStart(2,"0")}</div><h3>{currentFeature.title}</h3><p>{currentFeature.description}</p><ul>{currentFeature.bullets.map(item=><li key={item}><span>✓</span>{item}</li>)}</ul><a href="#demo" className="arrow-link">Explore {activeFeature} <span>→</span></a></div>
-          <div className="mini-product"><div className="mini-top"><span /><span /><span /><b>Team inbox</b></div><div className="mini-columns"><div className="mini-nav"><Mark />{[1,2,3,4].map(x=><i key={x}/>)}</div><div className="mini-list"><b>All conversations <span>12</span></b>{[1,2,3,4].map((x,i)=><div className={i===0?"on":""} key={x}><i className={`avatar a${i}`} /> <span><strong>{["Priya Sharma","Kabir Singh","Diya Patel","Arjun Rao"][i]}</strong><small>Customer message preview...</small></span></div>)}</div><div className="mini-chat"><div className="mini-chat-head"><i className="avatar a0"/><b>Priya Sharma<small>Online</small></b></div><span className="line l1"/><span className="line l2"/><div className="mini-bubble">Can you share the pricing details?</div><div className="mini-bubble green">Absolutely! Here&apos;s the plan that fits your team.</div></div></div></div>
+          <FeatureModule feature={activeFeature} />
         </div>
       </section>
 

@@ -27,7 +27,7 @@ const pangea = localFont({
 
 export const metadata: Metadata = {
   title: "WhatsEase | AI-powered WhatsApp CRM, Automation & Commerce",
-  description: "Manage conversations, leads, campaigns, AI automation, Shopify and WooCommerce journeys, catalogs and customer support from one WhatsApp-first platform.",
+  description: "Manage conversations, leads, campaigns, AI automation, Shopify journeys, catalogs and customer support from one WhatsApp-first platform.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
