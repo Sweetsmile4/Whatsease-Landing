@@ -2,12 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import Image from "next/image";
-import updatedInbox from "../public/inbox.png";
-import automationWorkspace from "../public/automation.png";
-import campaignsWorkspace from "../public/Campaigns.png";
-import crmWorkspace from "../public/crm.png";
-import commerceWorkspace from "../public/commerce.png";
-import analyticsWorkspace from "../public/Analytics.png";
+import updatedInbox from "../public/features/inbox.png";
+import automationWorkspace from "../public/features/automation.png";
+import campaignsWorkspace from "../public/features/Campaigns.png";
+import crmWorkspace from "../public/features/crm.png";
+import commerceWorkspace from "../public/features/commerce.png";
+import analyticsWorkspace from "../public/features/Analytics.png";
 import ComparisonMenu from "./components/ComparisonMenu";
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 
@@ -188,7 +188,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div className="customer-logos"><Image src="/Companies/cii.jpg" alt="Young Indians CII" width={112} height={52}/><Image src="/Companies/tws.png" alt="Train With Shubham" width={118} height={52}/><Image src="/Companies/wavesclub.png" alt="Waves Club" width={78} height={52}/><Image src="/Companies/vff.png" alt="VFF" width={92} height={52}/><Image src="/Companies/urbanforest.jpg" alt="Urban Forest" width={90} height={52}/></div></section>
+      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div className="customer-logos"><Image src="/Clients/cii-young-indians.png" alt="Young Indians CII" width={112} height={52}/><Image src="/Clients/Train With Shubham.png" alt="Train With Shubham" width={118} height={52}/><Image src="/Clients/wavesclub.png" alt="Waves Club" width={78} height={52}/><Image src="/Clients/vff.jpg" alt="VFF" width={92} height={52}/><Image src="/Clients/urbanforest.jpg" alt="Urban Forest" width={90} height={52}/></div></section>
 
       <section className="section product" id="product">
         <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
@@ -267,7 +267,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#0a2e1c] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0a2e1c]">See lead automation <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">See lead automation <ArrowRight className="h-4 w-4" /></a>
           </div>
         </div>
       </section>
@@ -289,7 +289,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#0a2e1c] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0a2e1c]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="relative min-h-115 overflow-hidden rounded-3xl border border-slate-100 bg-linear-to-b from-[#051a0f] to-[#0a2e1c] p-6 text-white shadow-lg shadow-[#0a2e1c]/10">
             <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c] shadow-sm">
@@ -413,7 +413,7 @@ export default function Home() {
             <div className="kicker">Secure by design</div>
             <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Your conversations. Protected at every step.</h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Enterprise-grade controls and India-based infrastructure help keep your customer data safe and your team in control.</p>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-700 transition hover:border-[#2d8a5e] hover:text-[#1e5f3f]">Explore security <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-[#84e5b4] px-6 py-4 text-sm font-bold text-slate-700 transition hover:bg-[#2d8a5e] hover:text-[#1e5f3f]">Explore security <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {securityCards.map(([title, text]) => (
@@ -433,7 +433,7 @@ export default function Home() {
             <div className="kicker">Frequently asked questions</div>
             <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Everything you need to know.</h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Still deciding whether WhatsEase fits your workflow? Our team can walk you through the details.</p>
-            <a href="mailto:connect.whatsease@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#0a2e1c] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0a2e1c]">Ask another question <ArrowRight className="h-4 w-4" /></a>
+            <a href="mailto:connect.whatsease@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">Ask another question <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="space-y-4">
             {faqs.map(([question, answer], index) => (
