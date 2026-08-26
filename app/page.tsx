@@ -8,6 +8,10 @@ import campaignsWorkspace from "../public/features/Campaigns.png";
 import crmWorkspace from "../public/features/crm.png";
 import commerceWorkspace from "../public/features/commerce.png";
 import analyticsWorkspace from "../public/features/Analytics.png";
+import aiAgentsWorkspace from "../public/features/Ai agents.jpeg";
+import leadAutomationWorkspace from "../public/features/lead.jpeg";
+import shopifyCommerceJourney from "../public/features/Shopify-WhatsApp Commerce Journey.png";
+import mobileAppWorkspace from "../public/features/app.png";
 import ComparisonMenu from "./components/ComparisonMenu";
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 
@@ -46,6 +50,21 @@ const platformGroups = [
 
 const integrations = ["WhatsApp APIs", "Google Sheets", "Shopify", "IndiaMART", "TradeIndia", "ExportersIndia", "Web forms", "Facebook", "Instagram"];
 
+const clientLogos = [
+  ["akshar table mart.jpeg", "Akshar Table Mart"], ["Alaiya Balaiya.png", "Alaiya Balaiya"],
+  ["anil modi tourism.jpeg", "Anil Modi Tourism"], ["Bansi bags.jpeg", "Bansi Bags"],
+  ["bpn labs.webp", "BPN Labs"], ["cii-young-indians.png", "Young Indians CII"],
+  ["classic auto center.jpeg", "Classic Auto Center"], ["got bull.jpeg", "Got Bull"],
+  ["Hackers Meetup.png", "Hackers Meetup"], ["Heritage Trust of Vadodara.png", "Heritage Trust of Vadodara"],
+  ["IcyPopps.webp", "IcyPopps"], ["indie.png", "Indie"], ["Mansi Arts.png", "Mansi Arts"],
+  ["MPC Gymkhana.png", "MPC Gymkhana"], ["olive jewellery.png", "Olive Jewellery"],
+  ["prayogshala.png", "Prayogshala"], ["SavitriUrbanFoodForest.jpg", "Savitri Urban Food Forest"],
+  ["simply-loan.png", "Simply Loan"], ["simplysalad.webp", "Simply Salad"],
+  ["swad amrutam chai.jpeg", "Swad Amrutam Chai"], ["Train With Shubham.png", "Train With Shubham"],
+  ["urban money.png", "Urban Money"], ["vff.jpg", "VFF"], ["vibrant-co-work.webp", "Vibrant Co-work"],
+  ["vipo.png", "VIPO"], ["wavesclub.png", "Waves Club"], ["Weekend Bazaar.jpg", "Weekend Bazaar"],
+];
+
 const outcomeStats = [
   { value: '60%', label: 'lower support costs', text: 'Let AI handle routine questions while your team focuses on high-value conversations.' },
   { value: '3.2x', label: 'faster responses', text: 'Smart routing and one shared inbox mean every customer reaches the right person quickly.' },
@@ -65,7 +84,12 @@ const commerceSteps = [
   { step: '04', title: 'Track every order', text: 'Keep customer and merchant notifications in sync.' },
 ];
 
-const mobilePoints = ['Installable web app', 'Mobile-first navigation', 'Direct conversation links', 'Real-time push alerts'];
+const mobilePoints = [
+  { title: 'Installable web app', text: 'Add to your home screen in one tap.' },
+  { title: 'Mobile-first navigation', text: 'Everything you need, designed for mobile.' },
+  { title: 'Direct conversation links', text: 'Jump straight into priority chats and take action.' },
+  { title: 'Real-time push alerts', text: 'Instant notifications for what matters most.' },
+];
 
 const securityCards = [
   ['India-based hosting', 'Your data stays closer to home.'],
@@ -106,14 +130,15 @@ function FeatureModule({ feature }: { feature: string }) {
   const isAnalytics = feature === "Analytics" || feature === "Campaigns";
   const isPipeline = feature === "CRM";
 
-  if (["Unified inbox", "Automations", "Campaigns", "CRM", "Commerce", "Analytics"].includes(feature)) {
+  if (["Unified inbox", "AI agents", "Automations", "Campaigns", "CRM", "Commerce", "Analytics"].includes(feature)) {
     const isInbox = feature === "Unified inbox";
+    const isAiAgents = feature === "AI agents";
     const isAutomation = feature === "Automations";
     const isCampaigns = feature === "Campaigns";
     const isCrm = feature === "CRM";
     const isCommerce = feature === "Commerce";
-    const workspaceImage = isInbox ? updatedInbox : isAutomation ? automationWorkspace : isCampaigns ? campaignsWorkspace : isCrm ? crmWorkspace : isCommerce ? commerceWorkspace : analyticsWorkspace;
-    const workspaceName = isInbox ? "Inbox" : isAutomation ? "Automations" : isCampaigns ? "Campaigns" : isCrm ? "CRM" : isCommerce ? "Commerce" : "Analytics";
+    const workspaceImage = isInbox ? updatedInbox : isAiAgents ? aiAgentsWorkspace : isAutomation ? automationWorkspace : isCampaigns ? campaignsWorkspace : isCrm ? crmWorkspace : isCommerce ? commerceWorkspace : analyticsWorkspace;
+    const workspaceName = isInbox ? "Inbox" : isAiAgents ? "AI Agents" : isAutomation ? "Automations" : isCampaigns ? "Campaigns" : isCrm ? "CRM" : isCommerce ? "Commerce" : "Analytics";
     return (
       <div className="module-screen actual-inbox-module">
         <div className="module-topbar"><div><span /><span /><span /></div><strong>WhatsEase {workspaceName}</strong><small>Live workspace</small></div>
@@ -161,7 +186,7 @@ export default function Home() {
       <header className="site-header">
         <a className="logo official-logo" href="#top" aria-label="WhatsEase home"><Image src="/logo.svg" alt="WhatsEase" width={154} height={32} priority /></a>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button>
-        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation">
           <a href="/product">Product</a>
           <a href="/use-case">Use Case</a>
           <ComparisonMenu />
@@ -188,7 +213,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div className="customer-logos"><Image src="/Clients/cii-young-indians.png" alt="Young Indians CII" width={112} height={52}/><Image src="/Clients/Train With Shubham.png" alt="Train With Shubham" width={118} height={52}/><Image src="/Clients/wavesclub.png" alt="Waves Club" width={78} height={52}/><Image src="/Clients/vff.jpg" alt="VFF" width={92} height={52}/><Image src="/Clients/urbanforest.jpg" alt="Urban Forest" width={90} height={52}/></div></section>
+      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div className="client-carousel"><div className="client-track">{[0, 1].map(copy => <div className="client-sequence" aria-hidden={copy === 1} key={copy}>{clientLogos.map(([file, name]) => <div className="client-logo" key={`${copy}-${file}`}><Image src={`/Clients/${file}`} alt={copy === 0 ? name : ""} width={150} height={70}/></div>)}</div>)}</div></div></section>
 
       <section className="section product" id="product">
         <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
@@ -229,28 +254,8 @@ export default function Home() {
 
       <section id="workflow" className="section-shell">
         <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
-          <div className="rounded-3xl border border-slate-100 bg-linear-to-b from-[#051a0f] to-[#0a2e1c] p-6 text-white shadow-lg shadow-[#0a2e1c]/10">
-            <div className="flex flex-wrap gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#b8d4c6]">
-              <span className="rounded-full border border-white/10 px-3 py-2">Meta</span>
-              <span className="rounded-full border border-white/10 px-3 py-2">Google</span>
-              <span className="rounded-full border border-white/10 px-3 py-2">Web forms</span>
-              <span className="rounded-full border border-white/10 px-3 py-2">Email</span>
-            </div>
-            <div className="relative mt-16 flex min-h-85 items-center justify-center rounded-3xl border border-white/10 bg-white/5">
-              <div className="absolute left-6 top-6 rounded-2xl bg-white px-4 py-3 text-sm text-[#0a2e1c] shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">New lead</div>
-                <div className="mt-1 font-bold">Kavya Desai</div>
-                <div className="mt-1 text-xs text-slate-500">Source: Instagram</div>
-              </div>
-              <div className="rounded-full border border-white/10 bg-[#e8f5ee] px-8 py-8 text-center text-[#0a2e1c] shadow-xl">
-                <Mark />
-                <div className="mt-3 text-sm font-bold uppercase tracking-[0.2em] text-[#1e5f3f]">WhatsEase</div>
-              </div>
-              <div className="absolute bottom-6 right-6 rounded-2xl bg-[#e8f5ee] px-4 py-3 text-[#0a2e1c] shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Assigned to</div>
-                <div className="mt-1 font-bold">Neha • West region</div>
-              </div>
-            </div>
+          <div className="self-center overflow-hidden rounded-3xl border border-slate-100 bg-[#071711] shadow-lg shadow-[#0a2e1c]/10">
+            <Image className="h-auto w-full object-contain" src={leadAutomationWorkspace} alt="WhatsEase lead automation and intelligent routing workspace" />
           </div>
           <div>
             <div className="kicker">Lead automation</div>
@@ -291,28 +296,8 @@ export default function Home() {
             </div>
             <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
           </div>
-          <div className="relative min-h-115 overflow-hidden rounded-3xl border border-slate-100 bg-linear-to-b from-[#051a0f] to-[#0a2e1c] p-6 text-white shadow-lg shadow-[#0a2e1c]/10">
-            <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c] shadow-sm">
-              <div>
-                <div className="text-sm font-bold">Your online store</div>
-                <div className="text-xs text-slate-500">Connected</div>
-              </div>
-              <span className="rounded-full bg-[#e8f5ee] px-3 py-1 text-xs font-bold text-[#1e5f3f]">Live</span>
-            </div>
-            <div className="absolute left-6 top-28 w-44 rounded-2xl bg-white p-4 text-[#0a2e1c] shadow-sm">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">New order</div>
-              <div className="mt-1 font-bold">#WE-24819</div>
-              <div className="mt-1 text-xs text-slate-500">2 products · ₹4,299</div>
-            </div>
-            <div className="absolute right-6 top-44 w-56 rounded-2xl bg-white p-4 text-[#0a2e1c] shadow-sm">
-              <div className="text-sm font-semibold">WhatsApp</div>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Hi Riya! Your order #WE-24819 is confirmed. We&apos;ll notify you as soon as it ships.</p>
-              <div className="mt-3 text-xs text-slate-500">10:42 AM ✓✓</div>
-            </div>
-            <div className="absolute bottom-6 left-6 rounded-2xl bg-[#e8f5ee] px-4 py-3 text-[#0a2e1c] shadow-sm">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Cart recovered</div>
-              <div className="mt-1 font-bold text-[#1e5f3f]">₹2,499 revenue</div>
-            </div>
+          <div className="self-center overflow-hidden rounded-3xl border border-slate-100 bg-[#071711] shadow-lg shadow-[#0a2e1c]/10">
+            <Image className="h-auto w-full object-contain" src={shopifyCommerceJourney} alt="Shopify and WhatsApp commerce journey in WhatsEase" />
           </div>
         </div>
       </section>
@@ -325,38 +310,18 @@ export default function Home() {
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Install WhatsEase as a web app, jump directly into priority chats and receive supported push notifications so important conversations do not wait for a desktop.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {mobilePoints.map((point) => (
-                <div key={point} className="rounded-2xl border border-slate-100 bg-white px-4 py-4 text-sm font-semibold text-slate-700 shadow-sm">
-                  <span className="mr-2 inline-grid h-5 w-5 place-items-center rounded-full bg-[#e8f5ee] text-xs font-black text-[#1e5f3f]">✓</span>
-                  {point}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="relative mx-auto w-full max-w-sm rounded-4xl border border-slate-100 bg-[#051a0f] p-4 text-white shadow-lg shadow-[#0a2e1c]/10">
-            <div className="mx-auto mb-4 h-2 w-24 rounded-full bg-white/20" />
-            <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c]">
-              <div className="flex items-center gap-3">
-                <Mark />
-                <b>Inbox</b>
-              </div>
-              <span className="rounded-full bg-[#e8f5ee] px-3 py-1 text-xs font-bold text-[#1e5f3f]">3</span>
-            </div>
-            <div className="mt-4 space-y-3">
-              {['New high-intent lead', 'Order needs attention', 'Customer replied'].map((item, index) => (
-                <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/6 px-4 py-3">
-                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 font-black text-[#2d8a5e]">{index === 0 ? 'AI' : index === 1 ? '#' : '@'}</div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-sm font-bold">{item}</div>
-                    <div className="truncate text-xs text-[#b8d4c6]">{index === 0 ? 'Lead score 91 - assigned to Sales' : 'Tap to open the conversation'}</div>
+                <div key={point.title} className="grid grid-cols-[28px_1fr] gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-4 shadow-sm">
+                  <span className="inline-grid h-6 w-6 place-items-center rounded-full bg-[#e8f5ee] text-xs font-black text-[#1e5f3f]">✓</span>
+                  <div>
+                    <div className="text-sm font-bold text-[#0a2e1c]">{point.title}</div>
+                    <p className="mt-1 text-xs font-normal leading-5 text-slate-500">{point.text}</p>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-[#0a2e1c]">
-              {['⌂', '✉', '+', '◉', '⚙'].map((item, index) => (
-                <span key={item} className={index === 1 ? 'font-black text-[#1e5f3f]' : ''}>{item}</span>
-              ))}
-            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <Image className="h-auto w-full max-w-lg object-contain" src={mobileAppWorkspace} alt="WhatsEase mobile app inbox and customer alerts" />
           </div>
         </div>
       </section>
