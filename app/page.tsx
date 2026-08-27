@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import updatedInbox from "../public/features/inbox.png";
 import automationWorkspace from "../public/features/automation.png";
@@ -15,14 +15,14 @@ import mobileAppWorkspace from "../public/features/app.png";
 import ComparisonMenu from "./components/ComparisonMenu";
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 
-const features = ["Unified inbox", "AI agents", "Automations", "Campaigns", "CRM", "Commerce", "Analytics"];
+const features = ["Unified Inbox", "AI Agents", "Automations", "Campaigns", "CRM", "E-Commerce", "Analytics"];
 const featureDetails: Record<string, { title: string; description: string; bullets: string[] }> = {
-  "Unified inbox": { title: "One inbox. Zero missed opportunities.", description: "Bring conversations, context and ownership together so every customer reaches the right person.", bullets: ["Assign and route conversations", "Collaborate with notes and mentions", "Open complete customer history"] },
-  "AI agents": { title: "Always-on answers with a human touch.", description: "Use AI to resolve routine questions, suggest replies, qualify intent and alert your team when it matters.", bullets: ["AI-assisted responses", "Lead qualification and alerts", "Human handoff with full context"] },
+  "Unified Inbox": { title: "One inbox. Zero missed opportunities.", description: "Bring conversations, context and ownership together so every customer reaches the right person.", bullets: ["Assign and route conversations", "Collaborate with notes and mentions", "Open complete customer history"] },
+  "AI Agents": { title: "Always-on answers with a human touch.", description: "Use AI to resolve routine questions, suggest replies, qualify intent and alert your team when it matters.", bullets: ["AI-assisted responses", "Lead qualification and alerts", "Human handoff with full context"] },
   "Automations": { title: "Build journeys without writing code.", description: "Create event-driven workflows for replies, templates, alerts, payments, catalogs and follow-ups.", bullets: ["Visual workflow builder", "Reusable triggers and actions", "Customer and team notifications"] },
   "Campaigns": { title: "Personal outreach at WhatsApp speed.", description: "Segment audiences, launch personalised campaigns and understand delivery, engagement and usage.", bullets: ["Broadcasts and newsletters", "Audience segmentation", "Campaign and wallet analytics"] },
   "CRM": { title: "Every relationship, deal and next step.", description: "Connect leads, contacts, companies, activities and opportunities to the conversations that created them.", bullets: ["Lead scoring and distribution", "Deals and sales forecasting", "Reminders and activity tracking"] },
-  "Commerce": { title: "From product discovery to repeat purchase.", description: "Connect Shopify, manage WhatsApp catalogs and automate order, merchant and cart-recovery journeys.", bullets: ["Shopify integration", "Catalogs and collections", "Abandoned-cart recovery"] },
+  "E-Commerce": { title: "From product discovery to repeat purchase.", description: "Connect Shopify, manage WhatsApp catalogs and automate order, merchant and cart-recovery journeys.", bullets: ["Shopify integration", "Catalogs and collections", "Abandoned-cart recovery"] },
   "Analytics": { title: "Know what is working and what needs attention.", description: "Track conversations, leads, campaigns, catalogs, orders, forms and team performance from actionable dashboards.", bullets: ["Sales and response performance", "Campaign and commerce insights", "Web-form submission analytics"] },
 };
 const industries = [
@@ -130,12 +130,12 @@ function Icon({ children }: { children: React.ReactNode }) {
 }
 
 const moduleContent: Record<string, { label: string; metric: string; rows: string[] }> = {
-  "Unified inbox": { label: "All conversations", metric: "12 open", rows: ["Priya Sharma", "Kabir Singh", "Diya Patel"] },
-  "AI agents": { label: "AI agent workspace", metric: "84% resolved", rows: ["Product enquiry agent", "Lead qualification", "Support handoff"] },
+  "Unified Inbox": { label: "All conversations", metric: "12 open", rows: ["Priya Sharma", "Kabir Singh", "Diya Patel"] },
+  "AI Agents": { label: "AI agent workspace", metric: "84% resolved", rows: ["Product enquiry agent", "Lead qualification", "Support handoff"] },
   "Automations": { label: "Customer journey", metric: "Active", rows: ["New enquiry received", "Qualify lead with AI", "Assign to sales team"] },
   "Campaigns": { label: "Campaign performance", metric: "92.4% delivered", rows: ["Festive offer", "Product launch", "Customer re-engagement"] },
   "CRM": { label: "Sales pipeline", metric: "₹18.4L value", rows: ["New leads", "Qualified", "Proposal sent"] },
-  "Commerce": { label: "Shopify orders", metric: "₹2.8L recovered", rows: ["Catalog shared", "Order confirmed", "Cart recovery"] },
+  "E-Commerce": { label: "Shopify orders", metric: "₹2.8L recovered", rows: ["Catalog shared", "Order confirmed", "Cart recovery"] },
   "Analytics": { label: "Performance overview", metric: "+28.6%", rows: ["Conversations", "Qualified leads", "Conversion rate"] },
 };
 
@@ -145,13 +145,13 @@ function FeatureModule({ feature }: { feature: string }) {
   const isAnalytics = feature === "Analytics" || feature === "Campaigns";
   const isPipeline = feature === "CRM";
 
-  if (["Unified inbox", "AI agents", "Automations", "Campaigns", "CRM", "Commerce", "Analytics"].includes(feature)) {
-    const isInbox = feature === "Unified inbox";
-    const isAiAgents = feature === "AI agents";
+  if (["Unified Inbox", "AI Agents", "Automations", "Campaigns", "CRM", "E-Commerce", "Analytics"].includes(feature)) {
+    const isInbox = feature === "Unified Inbox";
+    const isAiAgents = feature === "AI Agents";
     const isAutomation = feature === "Automations";
     const isCampaigns = feature === "Campaigns";
     const isCrm = feature === "CRM";
-    const isCommerce = feature === "Commerce";
+    const isCommerce = feature === "E-Commerce";
     const workspaceImage = isInbox ? updatedInbox : isAiAgents ? aiAgentsWorkspace : isAutomation ? automationWorkspace : isCampaigns ? campaignsWorkspace : isCrm ? crmWorkspace : isCommerce ? commerceWorkspace : analyticsWorkspace;
     const workspaceName = isInbox ? "Inbox" : isAiAgents ? "AI Agents" : isAutomation ? "Automations" : isCampaigns ? "Campaigns" : isCrm ? "CRM" : isCommerce ? "Commerce" : "Analytics";
     return (
@@ -176,7 +176,7 @@ function FeatureModule({ feature }: { feature: string }) {
           ) : isPipeline ? (
             <div className="pipeline-view">{moduleData.rows.map((row,index)=><div key={row}><small>{row}</small><article><b>{["Aarav Mehta","Pioneer Retail","Studio Arc"][index]}</b><span>{["₹1.2L","₹3.8L","₹2.4L"][index]}</span></article><article><b>{["Nisha Kapoor","Apex Events","Nova Labs"][index]}</b><span>{["₹80K","₹2.1L","₹4.6L"][index]}</span></article></div>)}</div>
           ) : (
-            <div className="conversation-view"><div className="module-rows">{moduleData.rows.map((row,index)=><div className={index === 0 ? "active" : ""} key={row}><i>{row[0]}</i><span><b>{row}</b><small>{feature === "Commerce" ? "Order journey updated" : "Customer message preview"}</small></span></div>)}</div><div className="module-detail"><span className="detail-line wide"/><span className="detail-line"/><div className="detail-bubble">{feature === "AI agents" ? "AI has qualified this conversation and prepared the next best response." : feature === "Commerce" ? "Your order is confirmed. We’ll send delivery updates on WhatsApp." : "Can you share more details about the right plan for my team?"}</div><div className="detail-bubble outgoing">{feature === "AI agents" ? "Suggested action: Assign to enterprise sales" : "Absolutely — I’ve shared the most relevant information below."}</div></div></div>
+            <div className="conversation-view"><div className="module-rows">{moduleData.rows.map((row,index)=><div className={index === 0 ? "active" : ""} key={row}><i>{row[0]}</i><span><b>{row}</b><small>{feature === "E-Commerce" ? "Order journey updated" : "Customer message preview"}</small></span></div>)}</div><div className="module-detail"><span className="detail-line wide"/><span className="detail-line"/><div className="detail-bubble">{feature === "AI Agents" ? "AI has qualified this conversation and prepared the next best response." : feature === "E-Commerce" ? "Your order is confirmed. We’ll send delivery updates on WhatsApp." : "Can you share more details about the right plan for my team?"}</div><div className="detail-bubble outgoing">{feature === "AI Agents" ? "Suggested action: Assign to enterprise sales" : "Absolutely — I’ve shared the most relevant information below."}</div></div></div>
           )}
         </div>
       </div>
@@ -186,9 +186,69 @@ function FeatureModule({ feature }: { feature: string }) {
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeFeature, setActiveFeature] = useState("Unified inbox");
+  const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
+  const [featureDirection, setFeatureDirection] = useState<1 | -1>(1);
   const [formSent, setFormSent] = useState(false);
+  const productSectionRef = useRef<HTMLElement>(null);
+  const activeFeatureIndexRef = useRef(0);
+  const featureWheelLockedRef = useRef(false);
+  const safeFeatureIndex = Number.isInteger(activeFeatureIndex) ? Math.max(0, Math.min(features.length - 1, activeFeatureIndex)) : 0;
+  const activeFeature = features[safeFeatureIndex];
   const currentFeature = featureDetails[activeFeature];
+
+  useEffect(() => {
+    activeFeatureIndexRef.current = safeFeatureIndex;
+  }, [safeFeatureIndex]);
+
+  useEffect(() => {
+    const section = productSectionRef.current;
+    if (!section) return;
+
+    let accumulatedDelta = 0;
+    let resetTimer: number | undefined;
+
+    const handleWheel = (event: WheelEvent) => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const index = activeFeatureIndexRef.current;
+      const direction = Math.sign(event.deltaY);
+      const canAdvance = direction > 0 && index < features.length - 1;
+      const canReturn = direction < 0 && index > 0;
+      if (!canAdvance && !canReturn) return;
+
+      event.preventDefault();
+      if (featureWheelLockedRef.current) return;
+
+      accumulatedDelta += event.deltaY;
+      window.clearTimeout(resetTimer);
+      resetTimer = window.setTimeout(() => { accumulatedDelta = 0; }, 160);
+      if (Math.abs(accumulatedDelta) < 45) return;
+
+      const movement = accumulatedDelta > 0 ? 1 : -1;
+      const nextIndex = Math.max(0, Math.min(features.length - 1, index + movement));
+      accumulatedDelta = 0;
+      if (nextIndex === index) return;
+      setFeatureDirection(nextIndex > index ? 1 : -1);
+      activeFeatureIndexRef.current = nextIndex;
+      setActiveFeatureIndex(nextIndex);
+      featureWheelLockedRef.current = true;
+      window.setTimeout(() => { featureWheelLockedRef.current = false; }, 520);
+    };
+
+    section.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      section.removeEventListener("wheel", handleWheel);
+      window.clearTimeout(resetTimer);
+    };
+  }, []);
+
+  const selectFeature = (feature: string) => {
+    const nextIndex = features.indexOf(feature);
+    if (nextIndex < 0) return;
+    setFeatureDirection(nextIndex >= activeFeatureIndexRef.current ? 1 : -1);
+    activeFeatureIndexRef.current = nextIndex;
+    setActiveFeatureIndex(nextIndex);
+  };
 
   function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -239,12 +299,12 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="section product" id="product">
+      <section className="section product" id="product" ref={productSectionRef}>
         <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
-        <div className="feature-tabs" role="tablist">{features.map(item=><button role="tab" aria-selected={activeFeature===item} className={activeFeature===item?"active":""} onClick={()=>setActiveFeature(item)} key={item}>{item}</button>)}</div>
+        <div className="feature-tabs" role="tablist">{features.map(item=><button role="tab" aria-selected={activeFeature===item} className={activeFeature===item?"active":""} onClick={()=>selectFeature(item)} key={item}>{item}</button>)}</div>
         <div className="feature-stage">
-          <div className="feature-copy"><div className="feature-number">{String(features.indexOf(activeFeature) + 1).padStart(2,"0")}</div><h3>{currentFeature.title}</h3><p>{currentFeature.description}</p><ul>{currentFeature.bullets.map(item=><li key={item}><span>✓</span>{item}</li>)}</ul><a href="#demo" className="arrow-link">Explore {activeFeature} <span>→</span></a></div>
-          <FeatureModule feature={activeFeature} />
+          <div className={`feature-copy feature-panel-enter feature-enter-${featureDirection > 0 ? "next" : "previous"}`} key={`copy-${activeFeature}`}><div className="feature-number">{String(safeFeatureIndex + 1).padStart(2,"0")}</div><h3>{currentFeature.title}</h3><p>{currentFeature.description}</p><ul>{currentFeature.bullets.map(item=><li key={item}><span>✓</span>{item}</li>)}</ul><a href="#demo" className="arrow-link">Explore {activeFeature} <span>→</span></a></div>
+          <div className={`feature-module-enter feature-enter-${featureDirection > 0 ? "next" : "previous"}`} key={`module-${activeFeature}`}><FeatureModule feature={activeFeature} /></div>
         </div>
       </section>
 
