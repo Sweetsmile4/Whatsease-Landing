@@ -51,14 +51,14 @@ const platformGroups = [
 
 const integrations = [
   { name: "WhatsApp APIs", logo: "whatsapp_logo.png" },
-  { name: "Google Sheets", logo: "google sheets.jpeg" },
+  { name: "Google Sheets", logo: "google sheets.png" },
   { name: "Shopify", logo: "shopify.png" },
   { name: "IndiaMART", logo: "indiaMart.png" },
   { name: "TradeIndia", logo: "trade india.png" },
   { name: "ExportersIndia", logo: "exporter india.png" },
   { name: "Web forms", logo: "web form.png" },
-  { name: "Facebook", logo: "facebook.jpeg" },
-  { name: "Instagram", logo: "instagram.jpeg" },
+  { name: "Facebook", logo: "facebook.png" },
+  { name: "Instagram", logo: "instagram.png" },
 ];
 
 const clientLogos = [
