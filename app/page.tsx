@@ -189,7 +189,7 @@ export default function Home() {
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
   const [featureDirection, setFeatureDirection] = useState<1 | -1>(1);
   const [formSent, setFormSent] = useState(false);
-  const productSectionRef = useRef<HTMLElement>(null);
+  const productSectionRef = useRef<HTMLDivElement>(null);
   const activeFeatureIndexRef = useRef(0);
   const featureWheelLockedRef = useRef(false);
   const safeFeatureIndex = Number.isInteger(activeFeatureIndex) ? Math.max(0, Math.min(features.length - 1, activeFeatureIndex)) : 0;
@@ -299,12 +299,14 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="section product" id="product" ref={productSectionRef}>
+      <section className="section product" id="product">
         <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
-        <div className="feature-tabs" role="tablist">{features.map(item=><button role="tab" aria-selected={activeFeature===item} className={activeFeature===item?"active":""} onClick={()=>selectFeature(item)} key={item}>{item}</button>)}</div>
-        <div className="feature-stage">
-          <div className={`feature-copy feature-panel-enter feature-enter-${featureDirection > 0 ? "next" : "previous"}`} key={`copy-${activeFeature}`}><div className="feature-number">{String(safeFeatureIndex + 1).padStart(2,"0")}</div><h3>{currentFeature.title}</h3><p>{currentFeature.description}</p><ul>{currentFeature.bullets.map(item=><li key={item}><span>✓</span>{item}</li>)}</ul><a href="#demo" className="arrow-link">Explore {activeFeature} <span>→</span></a></div>
-          <div className={`feature-module-enter feature-enter-${featureDirection > 0 ? "next" : "previous"}`} key={`module-${activeFeature}`}><FeatureModule feature={activeFeature} /></div>
+        <div className="feature-interactive" ref={productSectionRef}>
+          <div className="feature-tabs" role="tablist">{features.map(item=><button role="tab" aria-selected={activeFeature===item} className={activeFeature===item?"active":""} onClick={()=>selectFeature(item)} key={item}>{item}</button>)}</div>
+          <div className="feature-stage">
+            <div className={`feature-copy feature-panel-enter feature-enter-${featureDirection > 0 ? "next" : "previous"}`} key={`copy-${activeFeature}`}><div className="feature-number">{String(safeFeatureIndex + 1).padStart(2,"0")}</div><h3>{currentFeature.title}</h3><p>{currentFeature.description}</p><ul>{currentFeature.bullets.map(item=><li key={item}><span>✓</span>{item}</li>)}</ul><a href="#demo" className="arrow-link">Explore {activeFeature} <span>→</span></a></div>
+            <div className={`feature-module-enter feature-enter-${featureDirection > 0 ? "next" : "previous"}`} key={`module-${activeFeature}`}><FeatureModule feature={activeFeature} /></div>
+          </div>
         </div>
       </section>
 
