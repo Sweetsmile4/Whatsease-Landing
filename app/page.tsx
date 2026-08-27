@@ -9,7 +9,7 @@ import crmWorkspace from "../public/features/crm.png";
 import commerceWorkspace from "../public/features/commerce.png";
 import analyticsWorkspace from "../public/features/Analytics.png";
 import aiAgentsWorkspace from "../public/features/Ai agents.jpeg";
-import leadAutomationWorkspace from "../public/features/lead.jpeg";
+import leadAutomationWorkspace from "../public/features/lead.jpg";
 import shopifyCommerceJourney from "../public/features/Shopify-WhatsApp Commerce Journey.png";
 import mobileAppWorkspace from "../public/features/app.png";
 import ComparisonMenu from "./components/ComparisonMenu";
@@ -49,35 +49,45 @@ const platformGroups = [
   { icon: "07", title: "Prompt To Production", description: "Prompt-to-production AI that understands business intent and turns natural language into working automation.", items: ["Prompt to workflow", "AI inbox", "Campaign builder", "Flow generator", "AI templates", "Decision engine", "Ads improvisor", "WhatsEase AI voice calling agent"] },
 ];
 
-const integrations = ["WhatsApp APIs", "Google Sheets", "Shopify", "IndiaMART", "TradeIndia", "ExportersIndia", "Web forms", "Facebook", "Instagram"];
+const integrations = [
+  { name: "WhatsApp APIs", logo: "whatsapp_logo.png" },
+  { name: "Google Sheets", logo: "google sheets.jpeg" },
+  { name: "Shopify", logo: "shopify.png" },
+  { name: "IndiaMART", logo: "indiaMart.png" },
+  { name: "TradeIndia", logo: "trade india.png" },
+  { name: "ExportersIndia", logo: "exporter india.png" },
+  { name: "Web forms", logo: "web form.png" },
+  { name: "Facebook", logo: "facebook.jpeg" },
+  { name: "Instagram", logo: "instagram.jpeg" },
+];
 
 const clientLogos = [
-  ["akshar table mart.jpeg", "Akshar Table Mart"], 
+  ["akshar table mart.jpeg", "Akshar Table Mart"],
   ["Alaiya Balaiya.png", "Alaiya Balaiya"],
-  ["anil modi tourism.jpeg", "Anil Modi Tourism"], 
+  ["anil modi tourism.jpeg", "Anil Modi Tourism"],
   ["Bansi bags.jpeg", "Bansi Bags"],
-  ["bpn labs.webp", "BPN Labs"], 
+  ["bpn labs.webp", "BPN Labs"],
   ["cii-young-indians.png", "Young Indians CII"],
-  ["classic auto center.jpeg", "Classic Auto Center"], 
+  ["classic auto center.jpeg", "Classic Auto Center"],
   ["got bull.jpeg", "Got Bull"],
-  ["Hackers Meetup.png", "Hackers Meetup"], 
+  ["Hackers Meetup.png", "Hackers Meetup"],
   ["Heritage Trust of Vadodara.png", "Heritage Trust of Vadodara"],
-  ["IcyPopps.webp", "IcyPopps"], 
-  ["indie.png", "Indie"], 
+  ["IcyPopps.webp", "IcyPopps"],
+  ["indie.png", "Indie"],
   ["Mansi Arts.png", "Mansi Arts"],
-  ["MPC Gymkhana.png", "MPC Gymkhana"], 
+  ["MPC Gymkhana.png", "MPC Gymkhana"],
   ["olive jewellery.png", "Olive Jewellery"],
-  ["prayogshala.png", "Prayogshala"], 
+  ["prayogshala.png", "Prayogshala"],
   ["SavitriUrbanFoodForest.jpg", "Savitri Urban Food Forest"],
-  ["simply-loan.png", "Simply Loan"], 
+  ["simply-loan.png", "Simply Loan"],
   ["simplysalad.webp", "Simply Salad"],
-  ["swad amrutam chai.jpeg", "Swad Amrutam Chai"], 
+  ["swad amrutam chai.jpeg", "Swad Amrutam Chai"],
   ["Train With Shubham.png", "Train With Shubham"],
-  ["urban money.png", "Urban Money"], 
-  ["vff.jpg", "VFF"], 
+  ["urban money.png", "Urban Money"],
+  ["vff.jpg", "VFF"],
   ["vibrant-co-work.webp", "Vibrant Co-work"],
-  ["vipo.png", "VIPO"], 
-  ["wavesclub.png", "Waves Club"], 
+  ["vipo.png", "VIPO"],
+  ["wavesclub.png", "Waves Club"],
   ["Weekend Bazaar.jpg", "Weekend Bazaar"],
 ];
 
@@ -316,7 +326,7 @@ export default function Home() {
         <div className="platform-grid">{platformGroups.map(group=><article key={group.title}><div className="platform-card-head"><span>{group.icon}</span><h3>{group.title}</h3></div><p>{group.description}</p><ul>{group.items.map(item=><li key={item}><i aria-hidden="true">&#10003;</i>{item}</li>)}</ul></article>)}</div>
       </section>
 
-      <section className="integration-band"><div><small>CONNECTED TO THE TOOLS YOU ALREADY USE</small><div>{integrations.map((item,index)=><span key={item}><i>{index + 1}</i>{item}</span>)}</div></div></section>
+      <section className="integration-band"><div><small>CONNECTED TO THE TOOLS YOU ALREADY USE</small><div>{integrations.map(item=><span key={item.name}>{item.logo && <Image src={`/logos/${item.logo}`} alt={`${item.name} logo`} width={34} height={34}/>} {item.name}</span>)}</div></div></section>
 
       <section id="solutions" className="section-shell">
         <div className="soft-card px-6 py-12 sm:px-10">
@@ -339,7 +349,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="workflow" className="section-shell">
+      <section id="workflow" className="section-shell workflow-section">
         <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
           <div className="self-center overflow-hidden rounded-3xl border border-slate-100 bg-[#071711] shadow-lg shadow-[#0a2e1c]/10">
             <Image className="h-auto w-full object-contain" src={leadAutomationWorkspace} alt="WhatsEase lead automation and intelligent routing workspace" />
@@ -359,12 +369,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]">See lead automation <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="button mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]" style={{borderRadius: '9999px'}}>See lead automation <ArrowRight className="h-4 w-4" /></a>
           </div>
         </div>
       </section>
 
-      <section id="commerce" className="section-shell">
+      <section id="commerce" className="section-shell commerce-section">
         <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
           <div>
             <div className="kicker">Conversational commerce</div>
@@ -381,7 +391,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="button mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]" style={{borderRadius: '9999px'}}>Explore commerce <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="self-center overflow-hidden rounded-3xl border border-slate-100 bg-[#071711] shadow-lg shadow-[#0a2e1c]/10">
             <Image className="h-auto w-full object-contain" src={shopifyCommerceJourney} alt="Shopify and WhatsApp commerce journey in WhatsEase" />
@@ -389,7 +399,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="mobile" className="section-shell">
+      <section id="mobile" className="section-shell mobile-section">
         <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
           <div>
             <div className="kicker">Ready wherever work happens</div>
@@ -413,7 +423,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="industries" className="section-shell">
+      <section id="industries" className="section-shell industries-section">
         <div className="soft-card px-6 py-12 sm:px-10">
           <div className="section-heading">
             <div className="kicker">Solutions that fit</div>
@@ -434,7 +444,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="customers" className="section-shell">
+      <section id="customers" className="section-shell customers-section">
         <div className="soft-card px-6 py-12 sm:px-10">
           <div className="section-heading centered">
             <div className="kicker mx-auto">Customer stories</div>
@@ -459,13 +469,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="security" className="section-shell">
+      <section id="security" className="section-shell security-section">
         <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:px-10">
           <div>
             <div className="kicker">Secure by design</div>
             <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Your conversations. Protected at every step.</h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Enterprise-grade controls and India-based infrastructure help keep your customer data safe and your team in control.</p>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-[#84e5b4] px-6 py-4 text-sm font-bold text-slate-700 transition hover:bg-[#2d8a5e] hover:text-[#1e5f3f]">Explore security <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="button mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]" style={{borderRadius: '9999px'}}>Explore security <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {securityCards.map(([title, text]) => (
@@ -479,13 +489,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="faq" className="section-shell">
+      <section id="faq" className="section-shell faq-section">
         <div className="soft-card grid gap-10 px-6 py-12 lg:grid-cols-[.85fr_1.15fr] lg:px-10">
           <div>
             <div className="kicker">Frequently asked questions</div>
             <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Everything you need to know.</h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Still deciding whether WhatsEase fits your workflow? Our team can walk you through the details.</p>
-            <a href="mailto:connect.whatsease@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]">Ask another question <ArrowRight className="h-4 w-4" /></a>
+            <a href="mailto:connect.whatsease@gmail.com" className="button mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]" style={{borderRadius: '9999px'}}>Ask another question <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="space-y-4">
             {faqs.map(([question, answer], index) => (
@@ -498,9 +508,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="demo section" id="demo"><div className="demo-copy"><div className="kicker">LET&apos;S TALK</div><h2>See what WhatsEase can do for your team</h2><p>Book a personalised walkthrough. We&apos;ll learn about your workflow, show the features that matter and answer every question.</p><ul><li><span>✓</span> A tailored 30-minute product tour</li><li><span>✓</span> Practical recommendations for your team</li><li><span>✓</span> No pressure. No generic sales deck.</li></ul><div className="callout"><small>Prefer to talk now?</small><a href="tel:+919510468956">+91 95104 68956</a></div></div><form onSubmit={submitForm}>{formSent ? <div className="success"><span>✓</span><h3>Thanks—we&apos;ll be in touch.</h3><p>A WhatsEase specialist will contact you shortly.</p><button type="button" className="text-link" onClick={()=>setFormSent(false)}>Send another request</button></div> : <><div className="form-row"><label>Full name<input required name="name" placeholder="Your name" /></label><label>Work email<input required type="email" name="email" placeholder="you@company.com" /></label></div><div className="form-row"><label>Phone number<input required type="tel" name="phone" placeholder="+91 98765 43210" /></label><label>Company<input required name="company" placeholder="Company name" /></label></div><label>Team size<select name="size" defaultValue=""><option value="" disabled>Select team size</option><option>1–10</option><option>11–50</option><option>51–200</option><option>201+</option></select></label><label>What would you like to improve?<textarea name="message" placeholder="Tell us a little about your sales or support workflow" /></label><button className="button form-button">Book my free demo <span>→</span></button><small className="privacy">By submitting, you agree to our privacy policy. We&apos;ll never share your information.</small></>}</form></section>
+      <section className="demo section" id="demo"><div className="demo-copy"><div className="kicker">LET&apos;S TALK</div><h2>See what WhatsEase can do for your team</h2><p>Book a personalised walkthrough. We&apos;ll learn about your workflow, show the features that matter and answer every question.</p><ul><li><span>✓</span> A tailored 30-minute product tour</li><li><span>✓</span> Practical recommendations for your team</li><li><span>✓</span> No pressure. No generic sales deck.</li></ul></div><form onSubmit={submitForm}>{formSent ? <div className="success"><span>✓</span><h3>Thanks—we&apos;ll be in touch.</h3><p>A WhatsEase specialist will contact you shortly.</p><button type="button" className="text-link" onClick={()=>setFormSent(false)}>Send another request</button></div> : <><div className="form-row"><label>Full name<input required name="name" placeholder="Your name" /></label><label>Work email<input required type="email" name="email" placeholder="you@company.com" /></label></div><div className="form-row"><label>Phone number<input required type="tel" name="phone" placeholder="+91 12345 67890" /></label><label>Company<input required name="company" placeholder="Company name" /></label></div><label>Team size<select name="size" defaultValue=""><option value="" disabled>Select team size</option><option>1–10</option><option>11–50</option><option>51–200</option><option>201+</option></select></label><label>What would you like to improve?<textarea name="message" placeholder="Tell us a little about your sales or support workflow" /></label><button className="button form-button">Book my free demo <span>→</span></button><small className="privacy">By submitting, you agree to our privacy policy. We&apos;ll never share your information.</small></>}</form></section>
 
-      <footer className="footer"><div className="footer-main"><div className="footer-brand"><a className="logo inverse" href="#top"><Mark /><strong>Whats<span>Ease</span></strong></a><p>AI-powered conversations that help ambitious teams sell, support and grow on WhatsApp.</p><div className="footer-contact"><a href="tel:+919510468956">+91 95104 68956</a><a href="mailto:connect.whatsease@gmail.com">connect.whatsease@gmail.com</a><span>Vadodara, Gujarat, India</span></div></div><div><h3>Product</h3><a href="#product">Overview</a><a href="#platform">Features</a><a href="https://www.whatsease.in/pricing">Pricing</a><a href="#commerce">Commerce</a></div><div><h3>Solutions</h3><a href="#solutions">Sales</a><a href="#solutions">Support</a><a href="#solutions">Marketing</a><a href="#industries">Industries</a></div><div><h3>Company</h3><a href="#customers">Customers</a><a href="https://www.whatsease.in/about-us">About</a><a href="https://www.whatsease.in/contact">Contact</a><a href="https://www.whatsease.in/case-studies">Case studies</a></div><div><h3>Resources</h3><a href="https://www.whatsease.in/docs">Documentation</a><a href="https://www.whatsease.in/contact">Help centre</a><a href="https://www.whatsease.in/privacy">Privacy</a><a href="https://www.whatsease.in/terms">Terms</a></div></div><div className="footer-bottom"><span>© 2026 WhatsEase Technologies</span><span>Made with care in India <b>♥</b></span></div></footer>
+      <footer className="footer"><div className="footer-main"><div className="footer-brand"><a className="logo inverse" href="#top"><Image src="/logo.svg" alt="WhatsEase" width={154} height={32} /></a><p>AI-powered conversations that help ambitious teams sell, support and grow on WhatsApp.</p><div className="footer-contact"><a href="mailto:connect.whatsease@gmail.com">connect.whatsease@gmail.com</a><span>Vadodara, Gujarat, India</span></div></div><div><h3>Product</h3><a href="#product">Overview</a><a href="#platform">Features</a><a href="https://www.whatsease.in/pricing">Pricing</a><a href="#commerce">Commerce</a></div><div><h3>Solutions</h3><a href="#solutions">Sales</a><a href="#solutions">Support</a><a href="#solutions">Marketing</a><a href="#industries">Industries</a></div><div><h3>Company</h3><a href="#customers">Customers</a><a href="https://www.whatsease.in/about-us">About</a><a href="https://www.whatsease.in/contact">Contact</a><a href="https://www.whatsease.in/case-studies">Case studies</a></div><div><h3>Resources</h3><a href="https://www.whatsease.in/docs">Documentation</a><a href="https://www.whatsease.in/contact">Help centre</a><a href="https://www.whatsease.in/privacy">Privacy</a><a href="https://www.whatsease.in/terms">Terms</a></div></div><div className="footer-bottom"><span>© 2026 WhatsEase Technologies</span><span style={{display: 'inline-flex', alignItems: 'center', gap: '4px'}}>Made with care in India <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2" width="18" height="12"><rect width="3" height="0.667" fill="#FF9933"/><rect y="0.667" width="3" height="0.667" fill="#FFFFFF"/><rect y="1.333" width="3" height="0.667" fill="#138808"/><circle cx="1.5" cy="1" r="0.25" fill="#000080"/></svg></span></div></footer>
     </main>
   );
 }
