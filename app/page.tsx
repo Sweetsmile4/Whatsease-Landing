@@ -326,7 +326,7 @@ export default function Home() {
         <div className="platform-grid">{platformGroups.map(group=><article key={group.title}><div className="platform-card-head"><span>{group.icon}</span><h3>{group.title}</h3></div><p>{group.description}</p><ul>{group.items.map(item=><li key={item}><i aria-hidden="true">&#10003;</i>{item}</li>)}</ul></article>)}</div>
       </section>
 
-      <section className="integration-band"><div><small>CONNECTED TO THE TOOLS YOU ALREADY USE</small><div>{integrations.map(item=><span key={item.name}>{item.logo && <Image src={`/logos/${item.logo}`} alt={`${item.name} logo`} width={34} height={34}/>} {item.name}</span>)}</div></div></section>
+      <section className="integration-band"><div><small>CONNECTED TO THE TOOLS YOU ALREADY USE</small><div className="integration-carousel"><div className="integration-track">{[0,1].map(copy=><div className="integration-sequence" aria-hidden={copy===1} key={copy}>{integrations.map(item=><span key={`${copy}-${item.name}`}>{item.logo && <Image src={`/logos/${item.logo}`} alt={copy===0?`${item.name} logo`:""} width={34} height={34}/>} {item.name}</span>)}</div>)}</div></div></div></section>
 
       <section id="solutions" className="section-shell">
         <div className="soft-card px-6 py-12 sm:px-10">
