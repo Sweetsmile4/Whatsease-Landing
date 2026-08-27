@@ -46,6 +46,7 @@ const platformGroups = [
   { icon: "04", title: "Campaigns", description: "Create targeted WhatsApp outreach with visibility into delivery and spend.", items: ["Personalised broadcasts", "Newsletters and offers", "Audience segmentation", "Campaign analytics", "Usage and wallet visibility"] },
   { icon: "05", title: "Conversational commerce", description: "Bring products, orders and recovery journeys directly into WhatsApp.", items: ["Shopify integration", "Product catalogs and collections", "Abandoned-cart recovery", "Order and merchant notifications", "Commerce analytics"] },
   { icon: "06", title: "Control & integration", description: "Give each team the access they need and connect WhatsEase to your stack.", items: ["Google Sheets and web forms", "IndiaMART, TradeIndia & ExportersIndia", "WhatsApp APIs", "Facebook and Instagram", "Role-based permissions"] },
+  { icon: "07", title: "Prompt To Production", description: "Prompt-to-production AI that understands business intent and turns natural language into working automation.", items: ["Prompt to workflow", "AI inbox", "Campaign builder", "Flow generator", "AI templates", "Decision engine", "Ads improvisor", "WhatsEase AI voice calling agent"] },
 ];
 
 const integrations = ["WhatsApp APIs", "Google Sheets", "Shopify", "IndiaMART", "TradeIndia", "ExportersIndia", "Web forms", "Facebook", "Instagram"];

@@ -1,4 +1,7 @@
 @import "tailwindcss";
+.platform-grid article:last-child{grid-column:1/-1}.platform-grid article:last-child>p{max-width:780px;min-height:auto!important}.platform-grid article:last-child ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 24px}@media(max-width:800px){.platform-grid article:last-child ul{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.platform-grid article:last-child{grid-column:auto}.platform-grid article:last-child ul{grid-template-columns:1fr}}
+.section.product{padding-top:56px!important;padding-bottom:56px!important}.section.platform{padding-top:45px!important}@media(max-width:800px){.section.product{padding-top:32px!important;padding-bottom:32px!important}.section.platform{padding-top:32px!important}}@media(max-width:600px){.section.product{padding-top:26px!important;padding-bottom:26px!important}.section.platform{padding-top:26px!important}}
+.logo-strip>p{font-size:14px!important;line-height:1.5!important;letter-spacing:.16em!important;margin-bottom:26px!important;color:#52525B!important}@media(max-width:600px){.logo-strip>p{font-size:12px!important;letter-spacing:.12em!important;margin-bottom:20px!important}}
 .hero-copy h1 em{color:#03b500!important}
 
 /* Professional motion for the unified inbox shown in the hero */
@@ -11,7 +14,7 @@
 
 .button,.button-dark,.form-button{background:#18B466!important;border-color:#18B466!important;color:#fff!important}.button:hover,.button-dark:hover,.form-button:hover{background:#139556!important;border-color:#139556!important;color:#fff!important}.internal-page a[class~="rounded-full"]{background:#18B466!important;border-color:#18B466!important;color:#fff!important}.internal-page a[class~="rounded-full"]:hover{background:#139556!important;border-color:#139556!important;color:#fff!important}
 
-.logo-strip .client-track{animation-duration:24s!important}@media(max-width:600px){.logo-strip .client-track{animation-duration:18s!important}}
+.logo-strip .client-track{animation-duration:40s!important}@media(max-width:600px){.logo-strip .client-track{animation-duration:32s!important}}
 .logo-strip .client-carousel+.client-carousel{margin-top:16px}.logo-strip .client-carousel-reverse .client-track{animation-direction:reverse}
 .logo-strip .client-carousel .client-logo{background:transparent!important;border:0!important;border-radius:0!important;padding:0!important}
 .logo-strip .client-carousel,.logo-strip .client-track,.logo-strip .client-sequence{flex-wrap:nowrap!important;justify-content:flex-start!important}.logo-strip .client-sequence{gap:36px!important;padding-right:36px!important}.logo-strip .client-logo{width:170px!important;flex:0 0 170px!important}.logo-strip .client-logo img{display:block!important;margin:auto!important}@media(max-width:600px){.logo-strip .client-sequence{gap:22px!important;padding-right:22px!important}.logo-strip .client-logo{width:138px!important;flex-basis:138px!important}}
