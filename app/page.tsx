@@ -51,18 +51,33 @@ const platformGroups = [
 const integrations = ["WhatsApp APIs", "Google Sheets", "Shopify", "IndiaMART", "TradeIndia", "ExportersIndia", "Web forms", "Facebook", "Instagram"];
 
 const clientLogos = [
-  ["akshar table mart.jpeg", "Akshar Table Mart"], ["Alaiya Balaiya.png", "Alaiya Balaiya"],
-  ["anil modi tourism.jpeg", "Anil Modi Tourism"], ["Bansi bags.jpeg", "Bansi Bags"],
-  ["bpn labs.webp", "BPN Labs"], ["cii-young-indians.png", "Young Indians CII"],
-  ["classic auto center.jpeg", "Classic Auto Center"], ["got bull.jpeg", "Got Bull"],
-  ["Hackers Meetup.png", "Hackers Meetup"], ["Heritage Trust of Vadodara.png", "Heritage Trust of Vadodara"],
-  ["IcyPopps.webp", "IcyPopps"], ["indie.png", "Indie"], ["Mansi Arts.png", "Mansi Arts"],
-  ["MPC Gymkhana.png", "MPC Gymkhana"], ["olive jewellery.png", "Olive Jewellery"],
-  ["prayogshala.png", "Prayogshala"], ["SavitriUrbanFoodForest.jpg", "Savitri Urban Food Forest"],
-  ["simply-loan.png", "Simply Loan"], ["simplysalad.webp", "Simply Salad"],
-  ["swad amrutam chai.jpeg", "Swad Amrutam Chai"], ["Train With Shubham.png", "Train With Shubham"],
-  ["urban money.png", "Urban Money"], ["vff.jpg", "VFF"], ["vibrant-co-work.webp", "Vibrant Co-work"],
-  ["vipo.png", "VIPO"], ["wavesclub.png", "Waves Club"], ["Weekend Bazaar.jpg", "Weekend Bazaar"],
+  ["akshar table mart.jpeg", "Akshar Table Mart"], 
+  ["Alaiya Balaiya.png", "Alaiya Balaiya"],
+  ["anil modi tourism.jpeg", "Anil Modi Tourism"], 
+  ["Bansi bags.jpeg", "Bansi Bags"],
+  ["bpn labs.webp", "BPN Labs"], 
+  ["cii-young-indians.png", "Young Indians CII"],
+  ["classic auto center.jpeg", "Classic Auto Center"], 
+  ["got bull.jpeg", "Got Bull"],
+  ["Hackers Meetup.png", "Hackers Meetup"], 
+  ["Heritage Trust of Vadodara.png", "Heritage Trust of Vadodara"],
+  ["IcyPopps.webp", "IcyPopps"], 
+  ["indie.png", "Indie"], 
+  ["Mansi Arts.png", "Mansi Arts"],
+  ["MPC Gymkhana.png", "MPC Gymkhana"], 
+  ["olive jewellery.png", "Olive Jewellery"],
+  ["prayogshala.png", "Prayogshala"], 
+  ["SavitriUrbanFoodForest.jpg", "Savitri Urban Food Forest"],
+  ["simply-loan.png", "Simply Loan"], 
+  ["simplysalad.webp", "Simply Salad"],
+  ["swad amrutam chai.jpeg", "Swad Amrutam Chai"], 
+  ["Train With Shubham.png", "Train With Shubham"],
+  ["urban money.png", "Urban Money"], 
+  ["vff.jpg", "VFF"], 
+  ["vibrant-co-work.webp", "Vibrant Co-work"],
+  ["vipo.png", "VIPO"], 
+  ["wavesclub.png", "Waves Club"], 
+  ["Weekend Bazaar.jpg", "Weekend Bazaar"],
 ];
 
 const outcomeStats = [
@@ -213,7 +228,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="logo-strip"><p>Powering conversations for ambitious teams</p><div className="client-carousel"><div className="client-track">{[0, 1].map(copy => <div className="client-sequence" aria-hidden={copy === 1} key={copy}>{clientLogos.map(([file, name]) => <div className="client-logo" key={`${copy}-${file}`}><Image src={`/Clients/${file}`} alt={copy === 0 ? name : ""} width={150} height={70}/></div>)}</div>)}</div></div></section>
+      <section className="logo-strip">
+        <p>Powering conversations for ambitious teams</p>
+        {[false, true].map(reverse => (
+          <div className={`client-carousel${reverse ? " client-carousel-reverse" : ""}`} key={reverse ? "reverse" : "forward"}>
+            <div className="client-track">
+              {[...clientLogos, ...clientLogos].map(([file, name], index) => <div className="client-logo" aria-hidden={index >= clientLogos.length} key={`${index}-${file}`}><Image src={`/Clients/${file}.png`} alt={!reverse && index < clientLogos.length ? name : ""} width={300} height={120}/></div>)}
+            </div>
+          </div>
+        ))}
+      </section>
 
       <section className="section product" id="product">
         <div className="section-heading centered"><div className="kicker">ONE PLATFORM. EVERY CONVERSATION.</div><h2>Everything you need to turn chats into customers</h2><p>From the first hello to a closed deal, WhatsEase keeps your team fast, personal and perfectly in sync.</p></div>
@@ -272,7 +296,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">See lead automation <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]">See lead automation <ArrowRight className="h-4 w-4" /></a>
           </div>
         </div>
       </section>
@@ -294,7 +318,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
+            <a href="#demo" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]">Explore commerce <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="self-center overflow-hidden rounded-3xl border border-slate-100 bg-[#071711] shadow-lg shadow-[#0a2e1c]/10">
             <Image className="h-auto w-full object-contain" src={shopifyCommerceJourney} alt="Shopify and WhatsApp commerce journey in WhatsEase" />
@@ -398,7 +422,7 @@ export default function Home() {
             <div className="kicker">Frequently asked questions</div>
             <h2 className="mt-4 text-4xl font-black tracking-tighter text-[#0a2e1c] sm:text-5xl">Everything you need to know.</h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Still deciding whether WhatsEase fits your workflow? Our team can walk you through the details.</p>
-            <a href="mailto:connect.whatsease@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#84e5b4] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#408964]">Ask another question <ArrowRight className="h-4 w-4" /></a>
+            <a href="mailto:connect.whatsease@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#18B466] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#139556]">Ask another question <ArrowRight className="h-4 w-4" /></a>
           </div>
           <div className="space-y-4">
             {faqs.map(([question, answer], index) => (
