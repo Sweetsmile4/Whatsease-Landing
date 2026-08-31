@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Calendar, Users, Mail, Grid, Clock, BarChart3, User, Heart, Megaphone, Zap, CheckCircle, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 
 const testimonials = [
   { quote: "We needed a highly customized WhatsApp ticketing solution for an HNI event under CII Young Indians, and Whatsease stood out for its flexibility...", name: 'Harshit Gupta', role: 'Event Organiser, Young Indians (CII)' },
@@ -108,7 +107,7 @@ export default function Solution() {
               ))}
             </div>
             <div className="mt-8 pt-8 border-t border-[#2d8a5e]/30">
-              <blockquote className="text-sm font-medium leading-relaxed italic text-gray-700">"{currentTestimonial.quote}"</blockquote>
+              <blockquote className="text-sm font-medium leading-relaxed italic text-gray-700">&ldquo;{currentTestimonial.quote}&rdquo;</blockquote>
               <div className="mt-4 flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-[#1e5f3f] flex items-center justify-center text-white font-bold">{currentTestimonial.name.charAt(0)}</div>
                 <div>

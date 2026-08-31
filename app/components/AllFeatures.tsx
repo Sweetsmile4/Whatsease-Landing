@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react/no-unescaped-entities */
 
 import { motion } from 'framer-motion';
 import { Phone, Mic, Users, Handshake, Building2, Activity, MessageCircle, Megaphone, Bot, Inbox, Settings2, Bell, FileText, BarChart3, Lock, Network, MapPinOff, Database, Cloud, LineChart, BadgePercent, Contact2, Globe } from 'lucide-react';

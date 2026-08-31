@@ -53,7 +53,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ com
   return (
     <div style={{ minHeight: "100vh", background: "#f7faf9", color: "#10231b" }}>
       {/* Top bar */}
-      <header style={{ background: "#10231b", color: "#fff", padding: "0 24px" }}>
+      <header className="comparison-legacy-chrome" style={{ background: "#10231b", color: "#fff", padding: "0 24px" }}>
         <div style={{ maxWidth: 1168, margin: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#fff", fontWeight: 800, fontSize: 20 }}>
             <Mark /> WhatsEase
@@ -185,7 +185,7 @@ function Mark() {
 
 function Footer() {
   return (
-    <footer style={{ background: "#071711", color: "#d9e5df", padding: "44px max(24px, calc((100vw - 1168px)/2))" }}>
+    <footer className="comparison-legacy-chrome" style={{ background: "#071711", color: "#d9e5df", padding: "44px max(24px, calc((100vw - 1168px)/2))" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 800 }}>
           <Mark /> WhatsEase

@@ -1,6 +1,6 @@
 "use client";
+/* eslint-disable react/no-unescaped-entities */
 
-import { motion } from 'framer-motion';
 import { RefreshCcw, Zap, CheckCircle2, Users } from 'lucide-react';
 
 export default function LeadBucket() {
