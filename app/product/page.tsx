@@ -7,12 +7,14 @@ const products: ProductFeature[] = [
   { title: 'Conversational Commerce', description: 'Connect Shopify, share product catalogs, confirm orders and automate abandoned-cart, payment and delivery journeys on WhatsApp.', category: 'Communication' },
   { title: 'WhatsApp Voice Agent', description: 'Support automated voice-calling journeys for lead follow-up, qualification, reminders and customer outreach.', category: 'Communication' },
   { title: 'AI Agents', description: 'Answer common questions, qualify intent, suggest replies and hand important conversations to the right person with full context.', category: 'Automation' },
+  { title: 'Prompt-to-Production', description: 'Describe your business intent in natural language and turn it into production-ready workflows, campaigns, templates and decision logic.', category: 'Automation' },
+  { title: 'Speech-to-Production', description: 'Speak the automation you need and let WhatsEase translate your instructions into a working, editable customer journey.', category: 'Automation' },
   { title: 'Visual Automation', description: 'Turn natural-language instructions into event-driven workflows using triggers, filters, branches, delays and reusable actions.', category: 'Automation' },
   { title: 'Campaign Builder', description: 'Create personalised broadcasts, newsletters and offers with audience segmentation, scheduling and delivery visibility.', category: 'Automation' },
   { title: 'Lead Capture & Routing', description: 'Capture enquiries from ads, forms, marketplaces, email and social channels, then score and distribute them automatically.', category: 'Automation' },
   { title: 'WhatsApp Flows', description: 'Build structured customer journeys for enquiries, registrations, feedback and data collection using reusable WhatsApp experiences.', category: 'Engagement' },
   { title: 'Chatbots', description: 'Answer routine questions instantly, capture customer intent and move qualified conversations to the right team.', category: 'Engagement' },
-  { title: 'Mobile Web App', description: 'Open priority chats, follow direct conversation links and receive supported real-time alerts while your team is away from a desktop.', category: 'Engagement' },
+  { title: 'Mobile App', description: 'Manage important conversations anywhere with WhatsEase for Android and iOS.', category: 'Engagement' },
   { title: 'APIs & Webhooks', description: 'Connect WhatsEase to your existing stack and move conversation, lead, campaign and order data between business systems.', category: 'Engagement' },
   { title: 'Sales CRM', description: 'Keep leads, contacts, companies, deals, activities, reminders and conversation history connected in one sales workspace.', category: 'Business' },
   { title: 'Analytics & Reporting', description: 'Understand response time, conversion, campaigns, sales activity, commerce performance and team workload through actionable dashboards.', category: 'Business' },
@@ -55,7 +57,7 @@ export default function ProductPage() {
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1fr]">
           <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-            <div className="kicker">Official WhatsApp Business API partner</div>
+            <div className="kicker product-info-heading">Official WhatsApp Business API partner</div>
             <p className="mt-4 text-lg leading-8 text-slate-600">
               As an officially authorized WhatsApp Business Solution Provider, we deliver enterprise-grade API integration with advanced features and full compliance. Partnering with WhatsApp Business API, WhatsEase empowers enterprises with secure messaging, intelligent automation, and regulatory adherence.
             </p>
@@ -70,7 +72,7 @@ export default function ProductPage() {
           </div>
 
           <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-            <div className="kicker">Why businesses choose WhatsEase</div>
+            <div className="kicker product-info-heading">Why businesses choose WhatsEase</div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {stats.map(([value, label, detail]) => (
                 <article key={label} className="rounded-2xl bg-[#f7fbf9] p-4">
@@ -85,7 +87,7 @@ export default function ProductPage() {
 
         <div className="mt-10 flex flex-wrap gap-3">
           <Link href="/" className="button main-pill-button">
-            Back to home <span>→</span>
+            <span>←</span> Back to home
           </Link>
           <Link href="/pricing" className="button main-pill-button">
             See pricing <span>→</span>

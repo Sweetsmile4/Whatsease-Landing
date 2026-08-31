@@ -34,7 +34,7 @@ export default function InternalChrome({ children }: { children: ReactNode }) {
           <div><h3>Resources</h3><a href="https://www.whatsease.in/docs">Documentation</a><a href="https://www.whatsease.in/contact">Help centre</a><a href="https://www.whatsease.in/privacy">Privacy</a><a href="https://www.whatsease.in/terms">Terms</a></div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 WhatsEase Technologies</span><span>Made with love in India <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2" width="18" height="12"><rect width="3" height="0.667" fill="#FF9933"/><rect y="0.667" width="3" height="0.667" fill="#FFFFFF"/><rect y="1.333" width="3" height="0.667" fill="#138808"/><circle cx="1.5" cy="1" r="0.25" fill="#000080"/></svg></span></div>
+          <span>© 2026 WhatsEase Technologies</span><span className="footer-made-in-india">Made with love in India <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2" width="18" height="12"><rect width="3" height="0.667" fill="#FF9933"/><rect y="0.667" width="3" height="0.667" fill="#FFFFFF"/><rect y="1.333" width="3" height="0.667" fill="#138808"/><circle cx="1.5" cy="1" r="0.25" fill="#000080"/></svg></span></div>
       </footer>
     </div>
   );
