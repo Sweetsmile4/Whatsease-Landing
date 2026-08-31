@@ -16,7 +16,7 @@ export default function InternalChrome({ children }: { children: ReactNode }) {
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation">
           <Link href="/product">Product</Link>
-          <Link href="/use-case">Use Case</Link>
+          <Link href="/use-cases">Use Cases</Link>
           <ComparisonMenu />
           <Link href="/pricing">Pricing</Link>
           <Link href="/case-studies">Case Studies</Link>
@@ -29,7 +29,7 @@ export default function InternalChrome({ children }: { children: ReactNode }) {
         <div className="footer-main">
           <div className="footer-brand"><Link className="logo inverse official-logo" href="/"><Image src="/logo.svg" alt="WhatsEase" width={154} height={32} /></Link><p>AI-powered conversations that help ambitious teams sell, support and grow on WhatsApp.</p><div className="footer-contact"><a href="mailto:connect.whatsease@gmail.com">connect.whatsease@gmail.com</a><span>Vadodara, Gujarat, India</span></div></div>
           <div><h3>Product</h3><Link href="/product">Overview</Link><Link href="/product">Features</Link><Link href="/pricing">Pricing</Link><Link href="/use-case">Solutions</Link></div>
-          <div><h3>Solutions</h3><Link href="/use-case">Sales</Link><Link href="/use-case/customer-support">Support</Link><Link href="/use-case/whatsapp-marketing-campaigns">Marketing</Link><Link href="/case-studies">Industries</Link></div>
+          <div><h3>Solutions</h3><Link href="/use-cases">Sales</Link><Link href="/use-case/customer-support">Support</Link><Link href="/use-case/whatsapp-marketing-campaigns">Marketing</Link><Link href="/case-studies">Industries</Link></div>
           <div><h3>Company</h3><Link href="/case-studies">Customers</Link><Link href="/about">About</Link><Link href="/#demo">Contact</Link><Link href="/case-studies">Case studies</Link></div>
           <div><h3>Resources</h3><a href="https://www.whatsease.in/docs">Documentation</a><a href="https://www.whatsease.in/contact">Help centre</a><a href="https://www.whatsease.in/privacy">Privacy</a><a href="https://www.whatsease.in/terms">Terms</a></div>
         </div>
