@@ -4,24 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
-  ArrowRight, Bot, Check, Code2, GitBranch,
+  ArrowRight, Bot, CalendarDays, Code2, GitBranch, Headphones,
   Megaphone, Search, ShoppingBag, TicketCheck, Users,
   Webhook, Workflow, Zap,
 } from "lucide-react";
 
-type UseCase = {
-  title: string; description: string; benefits: string[]; capabilities: string[];
-  integrations: string[]; flow: string[]; cta: string; icon: typeof Zap;
-};
-
-const useCases: UseCase[] = [
-  { title: "Capture & Convert Leads", description: "Turn every enquiry into a qualified opportunity before interest turns cold.", benefits: ["Capture every channel", "Qualify automatically", "Route to the right team"], capabilities: ["Lead Capture", "AI Agents", "CRM", "Lead Routing"], integrations: ["Meta", "Instagram", "WhatsApp", "Google Sheets", "Web Forms"], flow: ["New enquiry", "AI qualification", "Lead score", "Sales rep"], cta: "Explore lead automation", icon: Users },
-  { title: "Recover Lost Sales", description: "Bring shoppers back with timely, personalised WhatsApp follow-ups.", benefits: ["Recover abandoned carts", "Automate reminders", "Personalise offers"], capabilities: ["WhatsApp Business", "Campaign Builder", "Automation", "Analytics"], integrations: ["Shopify", "WhatsApp", "CRM"], flow: ["Cart abandoned", "Smart reminder", "Personal offer", "Order complete"], cta: "Explore cart recovery", icon: ShoppingBag },
-  { title: "Support Customers with AI", description: "Answer repetitive questions instantly and involve a human only when needed.", benefits: ["Respond around the clock", "Reduce repetitive work", "Escalate intelligently"], capabilities: ["AI Agents", "Chatbots", "Unified Inbox", "Analytics"], integrations: ["WhatsApp", "Instagram", "Facebook", "Webhooks"], flow: ["Question", "AI agent", "Resolve or escalate", "Human handoff"], cta: "Explore AI support", icon: Bot },
-  { title: "Automate Follow-ups", description: "Keep every lead moving without relying on manual reminders.", benefits: ["Never miss a follow-up", "Trigger messages automatically", "Personalise by lead stage"], capabilities: ["Visual Automation", "CRM", "Campaign Builder", "Lead Routing"], integrations: ["WhatsApp", "Google Sheets", "Web Forms"], flow: ["New lead", "Day 1", "Day 3", "Reply"], cta: "Explore automation", icon: GitBranch },
-  { title: "Run WhatsApp Campaigns", description: "Reach the right audience with campaigns that still feel conversational.", benefits: ["Segment audiences", "Personalise each send", "Track engagement"], capabilities: ["Campaign Builder", "CRM", "Analytics", "Automation"], integrations: ["WhatsApp", "Shopify", "Google Sheets"], flow: ["Audience", "Segments", "Campaign", "Conversions"], cta: "Explore campaigns", icon: Megaphone },
-  { title: "Run Events on WhatsApp", description: "Connect registrations, payments, tickets, reminders and check-ins.", benefits: ["Simplify registration", "Automate attendee updates", "Manage one connected journey"], capabilities: ["WhatsApp Flows", "Automation", "Campaigns", "APIs"], integrations: ["WhatsApp", "Google Sheets", "Webhooks"], flow: ["Register", "Confirm", "QR ticket", "Check-in"], cta: "Explore event automation", icon: TicketCheck },
-];
+const compactUseCases = [
+  { title: "Lead capture & distribution", description: "Capture enquiries from every channel, qualify leads and route them to the right sales rep instantly.", tags: ["Capture", "Route"], icon: GitBranch },
+  { title: "Customer support", description: "Bring WhatsApp, email and social conversations into one inbox and resolve them faster.", tags: ["Unified inbox", "Team collaboration"], icon: Headphones },
+  { title: "AI chatbots & workflows", description: "Answer questions 24/7 and automate journeys with triggers, branches and smart integrations.", tags: ["AI agents", "Automation"], icon: Bot },
+  { title: "WhatsApp campaigns", description: "Run personalised promotions and follow-ups with audience segmentation and delivery tracking.", tags: ["Broadcasts", "Analytics"], icon: Megaphone },
+  { title: "Conversational commerce", description: "Recover abandoned carts, share product recommendations and drive more conversions on WhatsApp.", tags: ["Cart recovery", "Order updates"], icon: ShoppingBag },
+  { title: "Event registration & ticketing", description: "Manage registrations, payments, digital tickets and check-ins — all through WhatsApp.", tags: ["Tickets", "Check-in"], icon: TicketCheck },
+  { title: "Bookings & reminders", description: "Automate appointment bookings, confirmations and reminders to reduce no-shows.", tags: ["Reminders", "Reschedule"], icon: CalendarDays },
+  { title: "Customer engagement & retention", description: "Engage at the right time with updates, offers and follow-ups that build lasting relationships.", tags: ["Engagement", "Follow-ups"], icon: Users },
+] as const;
 
 const integrationData = [
   { name: "WhatsApp Business", logo: "whatsapp_logo.png", category: "Communication", description: "Run messaging, templates and customer journeys on WhatsApp." },
@@ -63,34 +60,40 @@ function FinalCta({ integrations = false }: { integrations?: boolean }) {
 }
 
 export function UseCasesExperience() {
-  const [active, setActive] = useState(0);
-  const selected = useCases[active];
-  return <main className="growth-page">
-    <section className="growth-hero growth-shell">
-      <div className="growth-hero-copy"><span className="growth-eyebrow">Use cases</span><h1>Built for the moments that move your business.</h1><p>From the first “Hi” to the next purchase, WhatsEase helps teams capture leads, automate conversations, recover sales and support customers across every stage.</p><div><a className="button main-pill-button" href="#outcomes">Explore use cases <span>↓</span></a><Link className="growth-text-link" href="/#demo">Book a demo <ArrowRight /></Link></div></div>
-      <HeroNetwork />
+  return <main className="compact-use-cases">
+    <section className="compact-use-cases-hero">
+      <span className="growth-eyebrow">Use cases</span>
+      <h1>Every conversation.<br />A better outcome.</h1>
+      <p>WhatsEase helps teams automate conversations across the customer journey so you can connect, engage and grow — effortlessly.</p>
     </section>
-
-    <section className="growth-section growth-shell" id="outcomes">
-      <div className="growth-heading"><span className="growth-eyebrow">Choose an outcome</span><h2>What are you trying to achieve?</h2><p>Choose an outcome and see how WhatsEase helps you get there.</p></div>
-      <div className="outcome-tabs" role="tablist">{useCases.map((item, index) => <button key={item.title} role="tab" aria-selected={active === index} className={active === index ? "active" : ""} onClick={() => setActive(index)}>{item.title.replace("Capture & Convert", "Get more").replace("Recover Lost", "Increase").replace("Support Customers with AI", "Automate support").replace("Automate Follow-ups", "Automate follow-ups").replace("Run WhatsApp Campaigns", "Engage customers").replace("Run Events on WhatsApp", "Run events")}</button>)}</div>
-      <div className="outcome-panel">
-        <div><span>0{active + 1}</span><selected.icon aria-hidden="true" /><h3>{selected.title}</h3><p>{selected.description}</p><ul>{selected.benefits.map(item => <li key={item}><Check />{item}</li>)}</ul></div>
-        <FlowDiagram nodes={selected.flow} />
-      </div>
-    </section>
-
-    <section className="growth-section growth-shell use-case-stack">
-      {useCases.map((item, index) => <article className={`story-card story-card-${index % 3}`} key={item.title}>
-        <div className="story-copy"><span className="story-number">0{index + 1}</span><item.icon className="story-icon" /><h2>{item.title}</h2><p>{item.description}</p><ul>{item.benefits.map(benefit => <li key={benefit}><Check />{benefit}</li>)}</ul><Link href={index === 2 ? "/use-case/customer-support" : index === 4 ? "/use-case/whatsapp-marketing-campaigns" : index === 5 ? "/use-case/event-management" : "/#demo"}>{item.cta} <ArrowRight /></Link></div>
-        <div className="story-visual"><FlowDiagram nodes={item.flow} /><div className="story-tags"><div><small>Capabilities</small>{item.capabilities.map(tag => <span key={tag}>{tag}</span>)}</div><div><small>Works with</small>{item.integrations.map(tag => <span key={tag}>{tag}</span>)}</div></div></div>
+    <section className="compact-use-case-grid" aria-label="WhatsEase use cases">
+      {compactUseCases.map(({ title, description, tags, icon: Icon }, index) => <article className="compact-use-case-card" key={title} style={{ "--card-index": index } as React.CSSProperties}>
+        <span className="compact-use-case-icon"><Icon aria-hidden="true" /></span>
+        <h2>{title}</h2>
+        <i aria-hidden="true" />
+        <p>{description}</p>
+        <div>{tags.map(tag => <span key={tag}>{tag}</span>)}</div>
       </article>)}
     </section>
-
-    <section className="growth-section growth-shell connect-panel"><div><span className="growth-eyebrow">Integrations</span><h2>Your workflows work better when your tools work together.</h2><p>Connect data, conversations and actions across the tools your team already uses.</p><Link href="/integrations">Explore all integrations <ArrowRight /></Link></div><HeroNetwork integrations /></section>
-
-    <section className="growth-section growth-shell journey-section"><div className="growth-heading"><span className="growth-eyebrow">One platform</span><h2>Every customer journey.</h2></div><div className="journey-lineup">{[["Discover","Lead Capture","Campaigns"],["Engage","WhatsApp","AI Agents"],["Qualify","CRM","Lead Scoring"],["Convert","Lead Routing","Automation"],["Support","Unified Inbox","AI Support"],["Retain","Campaigns","Analytics"]].map(([stage,a,b], index) => <div key={stage}><i>0{index + 1}</i><b>{stage}</b><span>{a}</span><span>{b}</span></div>)}</div></section>
-    <FinalCta />
+    <section className="compact-customer-journey" aria-labelledby="customer-journey-title">
+      <div className="compact-journey-heading"><span className="compact-cta-spark"><Zap aria-hidden="true" /></span><strong id="customer-journey-title">One platform. Every conversation.</strong></div>
+      <div className="compact-journey-stages">
+        {[
+          ["01", "Discover", "Campaigns", "Lead Capture"],
+          ["02", "Engage", "WhatsApp", "AI Agents"],
+          ["03", "Qualify", "AI Qualification", "Lead Scoring"],
+          ["04", "Convert", "Lead Routing", "Follow-ups"],
+          ["05", "Support", "Unified Inbox", "AI Support"],
+          ["06", "Retain", "Re-engagement", "Campaigns"],
+        ].map(([number, stage, first, second], index) => <div className="compact-journey-stage" key={stage}>
+          <span>{number}</span><strong>{stage}</strong><small>{first}</small><small>{second}</small>{index < 5 && <i aria-hidden="true">→</i>}
+        </div>)}
+      </div>
+    </section>
+    <section className="compact-integration-cta">
+      <div><span className="growth-eyebrow">Integrations</span><strong>Connect the tools behind every customer journey.</strong></div>
+      <Link href="/integrations">Explore integrations <ArrowRight /></Link>
+    </section>
   </main>;
 }
 
